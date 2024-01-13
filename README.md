@@ -1,3 +1,3 @@
 # mediBase
 
-mediBase project by Jouhanzasom
+mediBase is a project on Information Systems in Healthcare by Jouhanzasom
