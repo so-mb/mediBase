@@ -1,3 +1,7 @@
+<?php
+include("../connection.php");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,8 +18,8 @@
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Roboto:wght@500;700&display=swap" rel="stylesheet"> 
-    
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Roboto:wght@500;700&display=swap" rel="stylesheet">
+
     <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
@@ -59,7 +63,7 @@
                     </div>
                 </div>
                 <div class="navbar-nav w-100">
-                    <a href="index.html" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                    <a href="index.php" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
                     <div class="nav-item dropdown">
                         <a href="patients.html" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-hospital-user me-2"></i>Patients</a>
                         <div class="dropdown-menu bg-transparent border-0">
@@ -77,7 +81,7 @@
                     <a href="messages.html" class="nav-item nav-link"><i class="fa fa-message me-2"></i>Messages</a>
                     <a href="todo.html" class="nav-item nav-link"><i class="fa fa-list-check me-2"></i>To Do</a>
                     <a href="medscape.html" class="nav-item nav-link"><i class="fa fa-book-medical me-2"></i>Medscape</a>
-                    <a href="signin.html" class="nav-item nav-link"><i class="fa fa-right-from-bracket me-2"></i>Log out</a>
+                    <a href="signin.php" class="nav-item nav-link"><i class="fa fa-right-from-bracket me-2"></i>Log out</a>
                 </div>
             </nav>
         </div>
@@ -421,7 +425,7 @@
                 <div class="bg-secondary rounded-top p-4">
                     <div class="row">
                         <div class="col-12 col-sm-6 text-center text-sm-start">
-                            &copy; <a href="#">mediBase</a>, All Rights Reserved. 
+                            &copy; <a href="#">mediBase</a>, All Rights Reserved.
                         </div>
                         <div class="col-12 col-sm-6 text-center text-sm-end">
                             <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
