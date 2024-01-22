@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS `doctors` (
     `mobile_phone` VARCHAR(25) NULL,
     `email` VARCHAR(50) NOT NULL,
     `license_no` INT(10) NULL,
-    `department` ENUM('Cardiology','Orthopedics','Dermatology','Obstetrics and Gynecology (OB/GYN)','Psychiatry','Neurology') NULL,
+    `department` ENUM('Cardiology','Orthopedics','Dermatology','Obstetrics and Gynecology (OB/GYN)','Psychiatry','Neurology','Emergency') NULL,
     `position` ENUM('Medical Doctor (MD)','Consultant') NULL,
     `username` VARCHAR(25) UNIQUE NOT NULL,
     `password` CHAR(255) NOT NULL,
