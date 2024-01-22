@@ -1,3 +1,39 @@
+<?php
+include("../connection.php");
+
+session_start();
+
+if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
+    // Access user-specific information
+    $doctor_id = $_SESSION["id"];
+    $username = $_SESSION["username"];
+}
+// Change name on profile to doctor's name
+$name_sql = "SELECT name, department FROM doctors WHERE id = $doctor_id";
+$name_result = $conn->query($name_sql);
+
+if ($name_result && $name_result->num_rows > 0) {
+    $row = $name_result->fetch_assoc();
+    $doctor_name = $row["name"];
+    $doctor_department = $row["department"];
+}
+
+// Appointments Table
+$app_sql = "SELECT app.date_time AS appointment_date, 
+               pat.name AS patient_name, 
+               app.consultation_type, 
+               app.status, 
+               app.symptoms 
+        FROM appointments app 
+        JOIN patients pat ON app.patient_id = pat.id 
+        WHERE app.doctor_id = $doctor_id;";
+
+$app_result = mysqli_query($conn, $app_sql);
+
+mysqli_close($conn);
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,8 +50,8 @@
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Roboto:wght@500;700&display=swap" rel="stylesheet"> 
-    
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Roboto:wght@500;700&display=swap" rel="stylesheet">
+
     <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
@@ -54,24 +90,24 @@
                         <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
                     </div>
                     <div class="ms-3">
-                        <h6 class="mb-0">John Doe</h6>
-                        <span>Admin</span>
+                        <h6 class="mb-0"><?php echo $doctor_name; ?></h6>
+                        <span><?php echo $doctor_department; ?></span>
                     </div>
                 </div>
                 <div class="navbar-nav w-100">
-                    <a href="index.html" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                    <a href="index.php" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
                     <div class="nav-item dropdown">
-                        <a href="patients.html" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-hospital-user me-2"></i>Patients</a>
+                        <a href="patients.php" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-hospital-user me-2"></i>Patients</a>
                         <div class="dropdown-menu bg-transparent border-0">
-                            <a href="patients.html" class="dropdown-item">My Patients</a>
-                            <a href="patients.html#registerNewPatient" class="dropdown-item">Register New Patient</a>
+                            <a href="patients.php" class="dropdown-item">My Patients</a>
+                            <a href="patients.php#registerNewPatient" class="dropdown-item">Register New Patient</a>
                         </div>
                     </div>
                     <div class="nav-item dropdown">
-                        <a href="appointments.html" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown"><i class="fa fa-calendar-days me-2"></i>Appointments</a>
+                        <a href="appointments.php" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown"><i class="fa fa-calendar-days me-2"></i>Appointments</a>
                         <div class="dropdown-menu bg-transparent border-0">
-                            <a href="appointments.html" class="dropdown-item">My Appointments</a>
-                            <a href="patients.html#bookNewAppointment" class="dropdown-item">Book New Appointment</a>
+                            <a href="appointments.php" class="dropdown-item">My Appointments</a>
+                            <a href="patients.php#bookNewAppointment" class="dropdown-item">Book New Appointment</a>
                         </div>
                     </div>
                     <a href="messages.html" class="nav-item nav-link"><i class="fa fa-message me-2"></i>Messages</a>
@@ -164,12 +200,12 @@
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                             <img class="rounded-circle me-lg-2" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                            <span class="d-none d-lg-inline-flex">John Doe</span>
+                            <span class="d-none d-lg-inline-flex"><?php echo $doctor_name; ?></span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
                             <a href="#" class="dropdown-item">My Profile</a>
                             <a href="#" class="dropdown-item">Settings</a>
-                            <a href="#" class="dropdown-item">Log Out</a>
+                            <a href="signin.php" class="dropdown-item">Log Out</a>
                         </div>
                     </div>
                 </div>
@@ -189,58 +225,33 @@
                                     <th scope="col"></th>
                                     <th scope="col">Date</th>
                                     <th scope="col">Patient Name</th>
-                                    <th scope="col">Date of Birth</th>
-                                    <th scope="col">Conatct Number</th>
+                                    <th scope="col">Consultation Type</th>
+                                    <th scope="col">Status</th>
                                     <th scope="col">Comments</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td><input class="form-check-input" type="checkbox"></td>
-                                    <td>01 Jan 2024</td>
-                                    <td>John Doe</td>
-                                    <td>02.07.1990</td>
-                                    <td>0162734577</td>
-                                    <td>Stomach pain</td>
-                                    <td><a class="btn btn-sm btn-primary" href="">View</a></td>
-                                </tr>
-                                <tr>
-                                    <td><input class="form-check-input" type="checkbox"></td>
-                                    <td>01 Jan 2024</td>
-                                    <td>John Doe</td>
-                                    <td>02.07.1990</td>
-                                    <td>0162734577</td>
-                                    <td>None</td>
-                                    <td><a class="btn btn-sm btn-primary" href="">View</a></td>
-                                </tr>
-                                <tr>
-                                    <td><input class="form-check-input" type="checkbox"></td>
-                                    <td>01 Jan 2024</td>
-                                    <td>John Doe</td>
-                                    <td>02.07.1990</td>
-                                    <td>0162734577</td>
-                                    <td>None</td>
-                                    <td><a class="btn btn-sm btn-primary" href="">View</a></td>
-                                </tr>
-                                <tr>
-                                    <td><input class="form-check-input" type="checkbox"></td>
-                                    <td>01 Jan 2024</td>
-                                    <td>John Doe</td>
-                                    <td>02.07.1990</td>
-                                    <td>0162734577</td>
-                                    <td>None</td>
-                                    <td><a class="btn btn-sm btn-primary" href="">View</a></td>
-                                </tr>
-                                <tr>
-                                    <td><input class="form-check-input" type="checkbox"></td>
-                                    <td>01 Jan 2024</td>
-                                    <td>John Doe</td>
-                                    <td>02.07.1990</td>
-                                    <td>0162734577</td>
-                                    <td>Back pain</td>
-                                    <td><a class="btn btn-sm btn-primary" href="">View</a></td>
-                                </tr>
+                                <?php
+                                if ($app_result && mysqli_num_rows($app_result) > 0) {
+                                    // Fetch each row of appointment data
+                                    while ($row = mysqli_fetch_assoc($app_result)) {
+                                        $dateObject = new DateTime($row['appointment_date']);
+                                        $formattedDate = $dateObject->format('d-m-Y H:i');
+                                        echo "<tr>";
+                                        echo "<td><input class='form-check-input' type='checkbox'></td>";
+                                        echo "<td>" . htmlspecialchars($formattedDate) . "</td>";
+                                        echo "<td>" . htmlspecialchars($row['patient_name']) . "</td>";
+                                        echo "<td>" . htmlspecialchars($row['consultation_type']) . "</td>";
+                                        echo "<td>" . htmlspecialchars($row['status']) . "</td>";
+                                        echo "<td>" . htmlspecialchars($row['symptoms']) . "</td>";
+                                        echo "<td><a class='btn btn-sm btn-primary' href=''>View</a></td>";
+                                        echo "</tr>";
+                                    }
+                                } else {
+                                    echo "<tr><td colspan='7'>No appointments found</td></tr>";
+                                }
+                                ?>
                             </tbody>
                         </table>
                     </div>
@@ -253,7 +264,7 @@
                 <div class="bg-secondary rounded-top p-4">
                     <div class="row">
                         <div class="col-12 col-sm-6 text-center text-sm-start">
-                            &copy; <a href="#">mediBase</a>, All Rights Reserved. 
+                            &copy; <a href="#">mediBase</a>, All Rights Reserved.
                         </div>
                         <div class="col-12 col-sm-6 text-center text-sm-end">
                             <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
