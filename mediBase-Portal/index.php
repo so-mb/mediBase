@@ -9,12 +9,49 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
     $username = $_SESSION["username"];
 }
 // Change name on profile to doctor's name
-$name_sql = "SELECT name FROM doctors WHERE id = $doctor_id";
+$name_sql = "SELECT name, department FROM doctors WHERE id = $doctor_id";
 $name_result = $conn->query($name_sql);
 
 if ($name_result && $name_result->num_rows > 0) {
     $row = $name_result->fetch_assoc();
     $doctor_name = $row["name"];
+    $doctor_department = $row["department"];
+}
+
+// Widgets
+$widget1_sql = "SELECT COUNT(*) AS count FROM appointments
+                WHERE DATE(date_time) = CURDATE() AND doctor_id = $doctor_id AND status = 'fulfilled';";
+$widget1_result = $conn->query($widget1_sql);
+
+if ($widget1_result && $widget1_result->num_rows > 0) {
+    $row = $widget1_result->fetch_assoc();
+    $done_today = $row["count"];
+}
+
+$widget2_sql = "SELECT COUNT(*) AS count FROM appointments
+                WHERE DATE(date_time) = CURDATE() AND doctor_id = $doctor_id;";
+$widget2_result = $conn->query($widget2_sql);
+
+if ($widget2_result && $widget2_result->num_rows > 0) {
+    $row = $widget2_result->fetch_assoc();
+    $total_appt_td = $row["count"];
+}
+
+$widget3_sql = "SELECT COUNT(*) AS count FROM appointments
+                WHERE DATE(date_time) > CURDATE() AND doctor_id = $doctor_id;";
+$widget3_result = $conn->query($widget3_sql);
+
+if ($widget3_result && $widget3_result->num_rows > 0) {
+    $row = $widget3_result->fetch_assoc();
+    $upcoming_appt = $row["count"];
+}
+
+$widget4_sql = "SELECT COUNT(id) AS count FROM `appointments` WHERE doctor_id = $doctor_id;";
+$widget4_result = $conn->query($widget4_sql);
+
+if ($widget4_result && $widget4_result->num_rows > 0) {
+    $row = $widget4_result->fetch_assoc();
+    $patients_registered = $row["count"];
 }
 
 // Appointments Table
@@ -25,7 +62,8 @@ $app_sql = "SELECT app.date_time AS appointment_date,
                app.symptoms 
         FROM appointments app 
         JOIN patients pat ON app.patient_id = pat.id 
-        WHERE app.doctor_id = $doctor_id";
+        WHERE app.doctor_id = $doctor_id
+        AND DATE(app.date_time) = CURDATE()";
 
 $app_result = mysqli_query($conn, $app_sql);
 
@@ -89,7 +127,7 @@ mysqli_close($conn);
                     </div>
                     <div class="ms-3">
                         <h6 class="mb-0"><?php echo $doctor_name; ?></h6>
-                        <span>Admin</span>
+                        <span><?php echo $doctor_department; ?></span>
                     </div>
                 </div>
                 <div class="navbar-nav w-100">
@@ -104,7 +142,7 @@ mysqli_close($conn);
                     <div class="nav-item dropdown">
                         <a href="appointments.html" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-calendar-days me-2"></i>Appointments</a>
                         <div class="dropdown-menu bg-transparent border-0">
-                            <a href="appointments.html" class="dropdown-item">My Appointments</a>
+                            <a href="appointments.php" class="dropdown-item">My Appointments</a>
                             <a href="patients.html#bookNewAppointment" class="dropdown-item">Book New Appointment</a>
                         </div>
                     </div>
@@ -203,7 +241,7 @@ mysqli_close($conn);
                         <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
                             <a href="#" class="dropdown-item">My Profile</a>
                             <a href="#" class="dropdown-item">Settings</a>
-                            <a href="signin.html" class="dropdown-item">Log Out</a>
+                            <a href="signin.php" class="dropdown-item">Log Out</a>
                         </div>
                     </div>
                 </div>
@@ -219,7 +257,7 @@ mysqli_close($conn);
                             <i class="fa fa-calendar-check fa-3x text-primary"></i>
                             <div class="ms-3">
                                 <p class="mb-2">Appointments Done Today</p>
-                                <h6 class="mb-0">3</h6>
+                                <h6 class="mb-0"><?php echo $done_today; ?></h6>
                             </div>
                         </div>
                     </div>
@@ -228,7 +266,7 @@ mysqli_close($conn);
                             <i class="fa fa-people-group fa-3x text-primary"></i>
                             <div class="ms-3">
                                 <p class="mb-2">Total Appointmets For Today</p>
-                                <h6 class="mb-0">10</h6>
+                                <h6 class="mb-0"><?php echo $total_appt_td; ?></h6>
                             </div>
                         </div>
                     </div>
@@ -237,7 +275,7 @@ mysqli_close($conn);
                             <i class="fa fa-calendar-days fa-3x text-primary"></i>
                             <div class="ms-3">
                                 <p class="mb-2">Total Upcoming Appointments</p>
-                                <h6 class="mb-0">132</h6>
+                                <h6 class="mb-0"><?php echo $upcoming_appt; ?></h6>
                             </div>
                         </div>
                     </div>
@@ -246,7 +284,7 @@ mysqli_close($conn);
                             <i class="fa fa-hospital-user fa-3x text-primary"></i>
                             <div class="ms-3">
                                 <p class="mb-2">Patients Registered With You</p>
-                                <h6 class="mb-0">44</h6>
+                                <h6 class="mb-0"><?php echo $patients_registered; ?></h6>
                             </div>
                         </div>
                     </div>
@@ -260,7 +298,7 @@ mysqli_close($conn);
                 <div class="bg-secondary text-center rounded p-4">
                     <div class="d-flex align-items-center justify-content-between mb-4">
                         <h6 class="mb-0">Appointments</h6>
-                        <a href="">Show All</a>
+                        <a href="appointments.html">Show All</a>
                     </div>
                     <div class="table-responsive">
                         <table class="table text-start align-middle table-bordered table-hover mb-0">
