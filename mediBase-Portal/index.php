@@ -1,5 +1,35 @@
 <?php
 include("../connection.php");
+
+session_start();
+
+if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
+    // Access user-specific information
+    $doctor_id = $_SESSION["id"];
+    $username = $_SESSION["username"];
+}
+// Change name on profile to doctor's name
+$name_sql = "SELECT name FROM doctors WHERE id = $doctor_id";
+$name_result = $conn->query($name_sql);
+
+if ($name_result && $name_result->num_rows > 0) {
+    $row = $name_result->fetch_assoc();
+    $doctor_name = $row["name"];
+}
+
+// Appointments Table
+$app_sql = "SELECT app.date_time AS appointment_date, 
+               pat.name AS patient_name, 
+               app.consultation_type, 
+               pat.mobile_phone, 
+               app.symptoms 
+        FROM appointments app 
+        JOIN patients pat ON app.patient_id = pat.id 
+        WHERE app.doctor_id = $doctor_id";
+
+$app_result = mysqli_query($conn, $app_sql);
+
+mysqli_close($conn);
 ?>
 
 <!DOCTYPE html>
@@ -58,7 +88,7 @@ include("../connection.php");
                         <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
                     </div>
                     <div class="ms-3">
-                        <h6 class="mb-0">John Doe</h6>
+                        <h6 class="mb-0"><?php echo $doctor_name; ?></h6>
                         <span>Admin</span>
                     </div>
                 </div>
@@ -168,7 +198,7 @@ include("../connection.php");
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                             <img class="rounded-circle me-lg-2" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                            <span class="d-none d-lg-inline-flex">John Doe</span>
+                            <span class="d-none d-lg-inline-flex"><?php echo $doctor_name; ?></span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
                             <a href="#" class="dropdown-item">My Profile</a>
@@ -239,58 +269,31 @@ include("../connection.php");
                                     <th scope="col"></th>
                                     <th scope="col">Date</th>
                                     <th scope="col">Patient Name</th>
-                                    <th scope="col">Date of Birth</th>
+                                    <th scope="col">Consultation Type</th>
                                     <th scope="col">Phone No.</th>
                                     <th scope="col">Comments</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td><input class="form-check-input" type="checkbox"></td>
-                                    <td>01 Jan 2024</td>
-                                    <td>John Doe</td>
-                                    <td>02.07.1990</td>
-                                    <td>0162734577</td>
-                                    <td>Stomach pain</td>
-                                    <td><a class="btn btn-sm btn-primary" href="">View</a></td>
-                                </tr>
-                                <tr>
-                                    <td><input class="form-check-input" type="checkbox"></td>
-                                    <td>01 Jan 2024</td>
-                                    <td>John Doe</td>
-                                    <td>02.07.1990</td>
-                                    <td>0162734577</td>
-                                    <td>None</td>
-                                    <td><a class="btn btn-sm btn-primary" href="">View</a></td>
-                                </tr>
-                                <tr>
-                                    <td><input class="form-check-input" type="checkbox"></td>
-                                    <td>01 Jan 2024</td>
-                                    <td>John Doe</td>
-                                    <td>02.07.1990</td>
-                                    <td>0162734577</td>
-                                    <td>None</td>
-                                    <td><a class="btn btn-sm btn-primary" href="">View</a></td>
-                                </tr>
-                                <tr>
-                                    <td><input class="form-check-input" type="checkbox"></td>
-                                    <td>01 Jan 2024</td>
-                                    <td>John Doe</td>
-                                    <td>02.07.1990</td>
-                                    <td>0162734577</td>
-                                    <td>None</td>
-                                    <td><a class="btn btn-sm btn-primary" href="">View</a></td>
-                                </tr>
-                                <tr>
-                                    <td><input class="form-check-input" type="checkbox"></td>
-                                    <td>01 Jan 2024</td>
-                                    <td>John Doe</td>
-                                    <td>02.07.1990</td>
-                                    <td>0162734577</td>
-                                    <td>Back pain</td>
-                                    <td><a class="btn btn-sm btn-primary" href="">View</a></td>
-                                </tr>
+                                <?php
+                                if ($app_result && mysqli_num_rows($app_result) > 0) {
+                                    // Fetch each row of appointment data
+                                    while ($row = mysqli_fetch_assoc($app_result)) {
+                                        echo "<tr>";
+                                        echo "<td><input class='form-check-input' type='checkbox'></td>";
+                                        echo "<td>" . htmlspecialchars($row['appointment_date']) . "</td>";
+                                        echo "<td>" . htmlspecialchars($row['patient_name']) . "</td>";
+                                        echo "<td>" . htmlspecialchars($row['consultation_type']) . "</td>";
+                                        echo "<td>" . htmlspecialchars($row['mobile_phone']) . "</td>";
+                                        echo "<td>" . htmlspecialchars($row['symptoms']) . "</td>";
+                                        echo "<td><a class='btn btn-sm btn-primary' href=''>View</a></td>";
+                                        echo "</tr>";
+                                    }
+                                } else {
+                                    echo "<tr><td colspan='7'>No appointments found</td></tr>";
+                                }
+                                ?>
                             </tbody>
                         </table>
                     </div>
