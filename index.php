@@ -1,3 +1,24 @@
+<?php
+include("connection.php");
+
+session_start();
+
+// Book an Appointment
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    $speciality = filter_input(INPUT_POST, "speciality", FILTER_SANITIZE_SPECIAL_CHARS);
+
+    // Get doctors for speciality
+    $doctors_sql = ""
+    // if (mysqli_query($conn, $register_sql)) {
+    //     header("Location: index.php");
+    //     exit();
+    // };
+}
+
+mysqli_close($conn);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -58,7 +79,7 @@
                                         <li class="nav-item dropdown">
                                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pages</a>
                                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                                <a class="dropdown-item" href="index.html">Home</a>
+                                                <a class="dropdown-item" href="index.php">Home</a>
                                                 <a class="dropdown-item" href="about-us.html">About Us</a>
                                                 <a class="dropdown-item" href="services.html">Services</a>
                                                 <a class="dropdown-item" href="blog.html">News</a>
@@ -151,38 +172,35 @@
                         <div class="row no-gutters align-items-center">
                             <div class="col-12 col-lg-9">
                                 <div class="medilife-appointment-form">
-                                    <form action="#" method="post">
+                                    <form action="<?php htmlspecialchars($_SERVER["PHP_SELF"]) ?>" method="post">
                                         <div class="row align-items-end">
                                             <div class="col-12 col-md-4">
                                                 <div class="form-group">
-                                                    <select class="form-control" id="speciality">
-                                                    <option>Speciality 1</option>
-                                                    <option>Speciality 2</option>
-                                                    <option>Speciality 3</option>
-                                                    <option>Speciality 4</option>
-                                                    <option>Speciality 5</option>
-                                                </select>
+                                                    <select class="form-control" id="speciality" name="speciality">
+                                                        <option value="Cardiology">Cardiology</option>
+                                                        <option value="Orthopedics">Orthopedics</option>
+                                                        <option value="Dermatology">Dermatology</option>
+                                                        <option value="Obstetrics and Gynecology (OB/GYN)">Obstetrics and Gynecology</option>
+                                                        <option value="Psychiatry">Psychiatry</option>
+                                                        <option value="Neurology">Neurology</option>
+                                                        <option value="Emergency">Emergency</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-md-4">
                                                 <div class="form-group">
                                                     <select class="form-control" id="doctors">
-                                                    <option>Doctors 1</option>
-                                                    <option>Doctors 2</option>
-                                                    <option>Doctors 3</option>
-                                                    <option>Doctors 4</option>
-                                                    <option>Doctors 5</option>
-                                                </select>
+                                                        <option>Doctors 1</option>
+                                                        <option>Doctors 2</option>
+                                                        <option>Doctors 3</option>
+                                                        <option>Doctors 4</option>
+                                                        <option>Doctors 5</option>
+                                                    </select>
                                                 </div>
                                             </div>
-                                            <div class="col-12 col-md-2">
+                                            <div class="col-12 col-md-4">
                                                 <div class="form-group">
-                                                    <input type="text" class="form-control" name="date" id="date" placeholder="Date">
-                                                </div>
-                                            </div>
-                                            <div class="col-12 col-md-2">
-                                                <div class="form-group">
-                                                    <input type="text" class="form-control" name="time" id="time" placeholder="Time">
+                                                    <input type="datetime-local" class="form-control" name="datetime" id="date" placeholder="Date">
                                                 </div>
                                             </div>
                                             <div class="col-12 col-md-4">
@@ -192,7 +210,7 @@
                                             </div>
                                             <div class="col-12 col-md-4">
                                                 <div class="form-group">
-                                                    <input type="text" class="form-control border-top-0 border-right-0 border-left-0" name="number" id="number" placeholder="Phone">
+                                                    <input type="text" class="form-control border-top-0 border-right-0 border-left-0" name="phone_no" id="number" placeholder="Phone">
                                                 </div>
                                             </div>
                                             <div class="col-12 col-md-4">
@@ -636,8 +654,10 @@
                         <div class="bottom-footer-content">
                             <!-- Copywrite Text -->
                             <div class="copywrite-text">
-                                <p>&copy;<script>document.write(new Date().getFullYear());</script> All rights reserved <br> MediBase is a subsidiary of <strong>Jouhanzasom&reg;</strong></p>
-                      </div>
+                                <p>&copy;<script>
+                                        document.write(new Date().getFullYear());
+                                    </script> All rights reserved <br> MediBase is a subsidiary of <strong>Jouhanzasom&reg;</strong></p>
+                            </div>
                         </div>
                     </div>
                 </div>

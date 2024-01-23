@@ -81,7 +81,7 @@ mysqli_close($conn);
         <!-- Sidebar Start -->
         <div class="sidebar pe-4 pb-3">
             <nav class="navbar bg-secondary navbar-dark">
-                <a href="index.html" class="navbar-brand mx-4 mb-3">
+                <a href="index.php" class="navbar-brand mx-4 mb-3">
                     <img src="img/logo.png" alt="mediBase logo" style="margin-left: -5%;">
                 </a>
                 <div class="d-flex align-items-center ms-4 mb-4">
@@ -110,10 +110,10 @@ mysqli_close($conn);
                             <a href="patients.php#bookNewAppointment" class="dropdown-item">Book New Appointment</a>
                         </div>
                     </div>
-                    <a href="messages.html" class="nav-item nav-link"><i class="fa fa-message me-2"></i>Messages</a>
-                    <a href="todo.html" class="nav-item nav-link"><i class="fa fa-list-check me-2"></i>To Do</a>
-                    <a href="medscape.html" class="nav-item nav-link"><i class="fa fa-book-medical me-2"></i>Medscape</a>
-                    <a href="signin.html" class="nav-item nav-link"><i class="fa fa-right-from-bracket me-2"></i>Log out</a>
+                    <a href="messages.php" class="nav-item nav-link"><i class="fa fa-message me-2"></i>Messages</a>
+                    <a href="todo.php" class="nav-item nav-link"><i class="fa fa-list-check me-2"></i>To Do</a>
+                    <a href="medscape.php" class="nav-item nav-link"><i class="fa fa-book-medical me-2"></i>Medscape</a>
+                    <a href="signin.php" class="nav-item nav-link"><i class="fa fa-right-from-bracket me-2"></i>Log out</a>
                 </div>
             </nav>
         </div>
@@ -124,7 +124,7 @@ mysqli_close($conn);
         <div class="content">
             <!-- Navbar Start -->
             <nav class="navbar navbar-expand bg-secondary navbar-dark sticky-top px-4 py-0">
-                <a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
+                <a href="index.php" class="navbar-brand d-flex d-lg-none me-4">
                     <h2 class="text-primary mb-0"><i class="fa fa-user-edit"></i></h2>
                 </a>
                 <a href="#" class="sidebar-toggler flex-shrink-0">
@@ -170,7 +170,7 @@ mysqli_close($conn);
                                 </div>
                             </a>
                             <hr class="dropdown-divider">
-                            <a href="messages.html" class="dropdown-item text-center">See all messages</a>
+                            <a href="messages.php" class="dropdown-item text-center">See all messages</a>
                         </div>
                     </div>
                     <div class="nav-item dropdown">

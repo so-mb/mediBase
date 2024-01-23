@@ -24,6 +24,41 @@ $pat_sql = "SELECT id, name, birthdate, gender, email, mobile_phone
 
 $pat_result = mysqli_query($conn, $pat_sql);
 
+// Register a new Patient
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    $name = filter_input(INPUT_POST, "name", FILTER_SANITIZE_SPECIAL_CHARS);
+    $birthdate = $_POST["birthdate"];
+    $gender = filter_input(INPUT_POST, "gender", FILTER_SANITIZE_SPECIAL_CHARS);
+    $nationality = filter_input(INPUT_POST, "nationality", FILTER_SANITIZE_SPECIAL_CHARS);
+    $health_insurance = filter_input(INPUT_POST, "health_insurance", FILTER_SANITIZE_SPECIAL_CHARS);
+    $email = filter_input(INPUT_POST, "email", FILTER_SANITIZE_EMAIL);
+    $phone_no = filter_input(INPUT_POST, "phone_no", FILTER_SANITIZE_NUMBER_INT);
+    $emergency_name = filter_input(INPUT_POST, "emergency_name", FILTER_SANITIZE_SPECIAL_CHARS);
+    $emergency_no = filter_input(INPUT_POST, "emergency_no", FILTER_SANITIZE_NUMBER_INT);
+    $height = filter_input(INPUT_POST, "height", FILTER_SANITIZE_NUMBER_INT);
+    $weight = filter_input(INPUT_POST, "weight", FILTER_SANITIZE_NUMBER_INT);
+    $allergies = filter_input(INPUT_POST, "allergies", FILTER_SANITIZE_SPECIAL_CHARS);
+    $chronic_diseases = filter_input(INPUT_POST, "chronic_diseases", FILTER_SANITIZE_SPECIAL_CHARS);
+    $disabilities = filter_input(INPUT_POST, "disabilities", FILTER_SANITIZE_SPECIAL_CHARS);
+    $vaccines = filter_input(INPUT_POST, "vaccines", FILTER_SANITIZE_SPECIAL_CHARS);
+    $medications = filter_input(INPUT_POST, "medications", FILTER_SANITIZE_SPECIAL_CHARS);
+
+
+    $register_sql = "INSERT INTO `patients` (`name`, `birthdate`, `gender`, `nationality`, `health_insurance_no`,
+            `email`, `mobile_phone`, `emergency_contact_name`, `emergency_contact_no`, `doctor_id`,
+            `height`, `weight`, `allergies`, `chronic_diseases`, `disabilities`,
+            `vaccines`, `medications`) 
+            VALUES ('$name', '$birthdate', '$gender', '$nationality', '$health_insurance',
+            '$email', '$phone_no', '$emergency_name', '$emergency_no', '$doctor_id',
+            '$height', '$weight', '$allergies', '$chronic_diseases', '$disabilities',
+            '$vaccines', '$medications')";
+
+    if (mysqli_query($conn, $register_sql)) {
+        header("Location: patients.php");
+        exit();
+    };
+}
 mysqli_close($conn);
 ?>
 
@@ -103,9 +138,9 @@ mysqli_close($conn);
                             <a href="patients.php#bookNewAppointment" class="dropdown-item">Book New Appointment</a>
                         </div>
                     </div>
-                    <a href="messages.html" class="nav-item nav-link"><i class="fa fa-message me-2"></i>Messages</a>
-                    <a href="todo.html" class="nav-item nav-link"><i class="fa fa-list-check me-2"></i>To Do</a>
-                    <a href="medscape.html" class="nav-item nav-link"><i class="fa fa-book-medical me-2"></i>Medscape</a>
+                    <a href="messages.php" class="nav-item nav-link"><i class="fa fa-message me-2"></i>Messages</a>
+                    <a href="todo.php" class="nav-item nav-link"><i class="fa fa-list-check me-2"></i>To Do</a>
+                    <a href="medscape.php" class="nav-item nav-link"><i class="fa fa-book-medical me-2"></i>Medscape</a>
                     <a href="signin.php" class="nav-item nav-link"><i class="fa fa-right-from-bracket me-2"></i>Log out</a>
                 </div>
             </nav>
@@ -163,7 +198,7 @@ mysqli_close($conn);
                                 </div>
                             </a>
                             <hr class="dropdown-divider">
-                            <a href="messages.html" class="dropdown-item text-center">See all messages</a>
+                            <a href="messages.php" class="dropdown-item text-center">See all messages</a>
                         </div>
                     </div>
                     <div class="nav-item dropdown">
@@ -234,8 +269,8 @@ mysqli_close($conn);
                                     <th scope="col">Patient Name</th>
                                     <th scope="col">Birthdate</th>
                                     <th scope="col">Gender</th>
-                                    <th scope="col">Patient ID</th>
-                                    <th scope="col">Phone No.</th>
+                                    <th scope="col">Contact Number</th>
+                                    <th scope="col">Email</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
@@ -253,7 +288,7 @@ mysqli_close($conn);
                                         echo "<td>" . htmlspecialchars($row['gender']) . "</td>";
                                         echo "<td>" . htmlspecialchars($row['mobile_phone']) . "</td>";
                                         echo "<td>" . htmlspecialchars($row['email']) . "</td>"; // COMMENT: consider changes this to Patient ID
-                                        echo "<td><a class='btn btn-sm btn-primary openPopupBtn'><i class='fa fa-address-card me-2'></i>View</a></td>";
+                                        echo "<td><a class='btn btn-sm btn-primary openPopupBtn' data-popup-target='doctorInfoPopup'><i class='fa fa-address-card me-2'></i>View</a></td>";
                                         echo "</tr>";
                                     }
                                 } else {
@@ -278,40 +313,30 @@ mysqli_close($conn);
             <div class="container-fluid pt-4 px-4" id="registerNewPatient">
                 <div class="bg-secondary rounded h-100 p-4">
                     <h6 class="mb-4">Register New Patient</h6>
-                    <form>
+                    <form action="<?php htmlspecialchars($_SERVER["PHP_SELF"]) ?>" method="post">
                         <div class="row mb-3">
-                            <label for="inputEmail3" class="col-sm-2 col-form-label">First Name</label>
+                            <label for="inputEmail3" class="col-sm-2 col-form-label">Patient Name</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="inputEmail3" required>
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <label for="inputEmail3" class="col-sm-2 col-form-label">Last Name</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="inputEmail3" required>
+                                <input type="text" class="form-control" id="inputEmail3" name="name" required>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="inputEmail3" class="col-sm-2 col-form-label">Date of Birth</label>
                             <div class="col-sm-10">
-                                <form id="dateForm" action="#SERVER_ENDPOINT" method="post">
-                                    <input type="date" id="datePicker" name="date" required>
-                                </form>                                
-                            </div>                         
+                                <input type="date" id="inputEmail3" name="birthdate" required>
+                            </div>
                         </div>
                         <fieldset class="row mb-3">
                             <legend class="col-form-label col-sm-2 pt-0">Gender</legend>
                             <div class="col-sm-10">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="gridRadios"
-                                        id="gridRadios1" value="option1">
+                                    <input class="form-check-input" type="radio" name="gender" id="gridRadios1" value="male">
                                     <label class="form-check-label" for="gridRadios1">
                                         Male
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="gridRadios"
-                                        id="gridRadios2" value="option2">
+                                    <input class="form-check-input" type="radio" name="gender" id="gridRadios2" value="female">
                                     <label class="form-check-label" for="gridRadios2">
                                         Female
                                     </label>
@@ -432,7 +457,6 @@ mysqli_close($conn);
                                     <option value="Iraq">Iraq</option>
                                     <option value="Ireland">Ireland</option>
                                     <option value="Isle of Man">Isle of Man</option>
-                                    <option value="Israel">Israel</option>
                                     <option value="Italy">Italy</option>
                                     <option value="Jamaica">Jamaica</option>
                                     <option value="Japan">Japan</option>
@@ -495,7 +519,7 @@ mysqli_close($conn);
                                     <option value="Oman">Oman</option>
                                     <option value="Pakistan">Pakistan</option>
                                     <option value="Palau">Palau</option>
-                                    <option value="Palestinian Territory, Occupied">Palestinian Territory, Occupied</option>
+                                    <option value="Palestine">Palestine</option>
                                     <option value="Panama">Panama</option>
                                     <option value="Papua New Guinea">Papua New Guinea</option>
                                     <option value="Paraguay">Paraguay</option>
@@ -577,77 +601,78 @@ mysqli_close($conn);
                                     <option value="Zambia">Zambia</option>
                                     <option value="Zimbabwe">Zimbabwe</option>
                                 </select>
-                            </div>                         
+                            </div>
                         </div>
                         <div class="row mb-3">
                             <label for="inputEmail3" class="col-sm-2 col-form-label">Health Insurance No.</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="inputEmail3" required>
+                                <input type="text" class="form-control" id="inputEmail3" name="health_insurance" required>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
                             <div class="col-sm-10">
-                                <input type="email" class="form-control" id="inputEmail3">
+                                <input type="email" class="form-control" id="inputEmail3" name="email" required>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="inputEmail3" class="col-sm-2 col-form-label">Phone No.</label>
                             <div class="col-sm-10">
-                                <input type="tel" class="form-control" id="inputEmail3">
+                                <input type="tel" class="form-control" id="inputEmail3" name="phone_no" required>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="inputEmail3" class="col-sm-2 col-form-label">Emergency Contact Name</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="inputEmail3">
+                                <input type="text" class="form-control" id="inputEmail3" name="emergency_name" required>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="inputEmail3" class="col-sm-2 col-form-label">Emergency Contact No.</label>
                             <div class="col-sm-10">
-                                <input type="tel" class="form-control" id="inputEmail3">
+                                <input type="tel" class="form-control" id="inputEmail3" name="emergency_no" required>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="inputEmail3" class="col-sm-2 col-form-label">Height</label>
                             <div class="col-sm-10">
-                                <input type="number" class="form-control" id="inputEmail3">
+                                <input type="number" class="form-control" id="inputEmail3" name="height" required>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="inputEmail3" class="col-sm-2 col-form-label">Weight</label>
                             <div class="col-sm-10">
-                                <input type="number" class="form-control" id="inputEmail3">
+                                <input type="number" class="form-control" id="inputEmail3" name="weight" required>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="inputEmail3" class="col-sm-2 col-form-label">Allergies</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="inputEmail3">
+                                <input type="text" class="form-control" id="inputEmail3" name="allergies">
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="inputEmail3" class="col-sm-2 col-form-label">Chronic Diseases</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="inputEmail3">
+                                <input type="text" class="form-control" id="inputEmail3" name="chronic_diseases">
                             </div>
-                        </div><div class="row mb-3">
+                        </div>
+                        <div class="row mb-3">
                             <label for="inputEmail3" class="col-sm-2 col-form-label">Disabilities</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="inputEmail3">
+                                <input type="text" class="form-control" id="inputEmail3" name="disabilities">
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label for="inputEmail3" class="col-sm-2 col-form-label">Vaccines & Medications</label>
+                            <label for="inputEmail3" class="col-sm-2 col-form-label">Vaccines</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="inputEmail3">
+                                <input type="text" class="form-control" id="inputEmail3" name="vaccines">
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label for="inputEmail3" class="col-sm-2 col-form-label">Doctor's ID</label>
+                            <label for="inputEmail3" class="col-sm-2 col-form-label">Medications</label>
                             <div class="col-sm-10">
-                                <input class="form-control" id="inputEmail3" required>
+                                <input type="text" class="form-control" id="inputEmail3" name="medications">
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -656,7 +681,7 @@ mysqli_close($conn);
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" id="gridCheck1" required>
                                     <label class="form-check-label" for="gridCheck1">
-                                        The patient hereby agrees to be registered with $GET_DOCTOR'S_NAME (ID: XXXXX), and gives full consent.
+                                        The patient hereby agrees to be registered with Dr. <?php echo $doctor_name ?>, and gives full consent.
                                     </label>
                                 </div>
                             </div>
