@@ -46,7 +46,7 @@ if ($widget3_result && $widget3_result->num_rows > 0) {
     $upcoming_appt = $row["count"];
 }
 
-$widget4_sql = "SELECT COUNT(id) AS count FROM `appointments` WHERE doctor_id = $doctor_id;";
+$widget4_sql = "SELECT COUNT(*) AS count FROM `patients` WHERE doctor_id = $doctor_id;";
 $widget4_result = $conn->query($widget4_sql);
 
 if ($widget4_result && $widget4_result->num_rows > 0) {
@@ -117,7 +117,7 @@ mysqli_close($conn);
         <!-- Sidebar Start -->
         <div class="sidebar pe-4 pb-3">
             <nav class="navbar bg-secondary navbar-dark">
-                <a href="index.html" class="navbar-brand mx-4 mb-3">
+                <a href="index.php" class="navbar-brand mx-4 mb-3">
                     <img src="img/logo.png" alt="mediBase logo" style="margin-left: -5%;">
                 </a>
                 <div class="d-flex align-items-center ms-4 mb-4">
@@ -140,15 +140,15 @@ mysqli_close($conn);
                         </div>
                     </div>
                     <div class="nav-item dropdown">
-                        <a href="appointments.html" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-calendar-days me-2"></i>Appointments</a>
+                        <a href="appointments.php" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-calendar-days me-2"></i>Appointments</a>
                         <div class="dropdown-menu bg-transparent border-0">
                             <a href="appointments.php" class="dropdown-item">My Appointments</a>
                             <a href="patients.php#bookNewAppointment" class="dropdown-item">Book New Appointment</a>
                         </div>
                     </div>
-                    <a href="messages.html" class="nav-item nav-link"><i class="fa fa-message me-2"></i>Messages</a>
-                    <a href="todo.html" class="nav-item nav-link"><i class="fa fa-list-check me-2"></i>To Do</a>
-                    <a href="medscape.html" class="nav-item nav-link"><i class="fa fa-book-medical me-2"></i>Medscape</a>
+                    <a href="messages.php" class="nav-item nav-link"><i class="fa fa-message me-2"></i>Messages</a>
+                    <a href="todo.php" class="nav-item nav-link"><i class="fa fa-list-check me-2"></i>To Do</a>
+                    <a href="medscape.php" class="nav-item nav-link"><i class="fa fa-book-medical me-2"></i>Medscape</a>
                     <a href="signin.php" class="nav-item nav-link"><i class="fa fa-right-from-bracket me-2"></i>Log out</a>
                 </div>
             </nav>
@@ -160,7 +160,7 @@ mysqli_close($conn);
         <div class="content">
             <!-- Navbar Start -->
             <nav class="navbar navbar-expand bg-secondary navbar-dark sticky-top px-4 py-0">
-                <a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
+                <a href="index.php" class="navbar-brand d-flex d-lg-none me-4">
                     <h2 class="text-primary mb-0"><i class="fa fa-user-edit"></i></h2>
                 </a>
                 <a href="#" class="sidebar-toggler flex-shrink-0">
@@ -206,7 +206,7 @@ mysqli_close($conn);
                                 </div>
                             </a>
                             <hr class="dropdown-divider">
-                            <a href="messages.html" class="dropdown-item text-center">See all messages</a>
+                            <a href="messages.php" class="dropdown-item text-center">See all messages</a>
                         </div>
                     </div>
                     <div class="nav-item dropdown">
@@ -298,7 +298,7 @@ mysqli_close($conn);
                 <div class="bg-secondary text-center rounded p-4">
                     <div class="d-flex align-items-center justify-content-between mb-4">
                         <h6 class="mb-0">Appointments</h6>
-                        <a href="appointments.html">Show All</a>
+                        <a href="appointments.php">Show All</a>
                     </div>
                     <div class="table-responsive">
                         <table class="table text-start align-middle table-bordered table-hover mb-0">
@@ -349,7 +349,7 @@ mysqli_close($conn);
                         <div class="h-100 bg-secondary rounded p-4">
                             <div class="d-flex align-items-center justify-content-between mb-2">
                                 <h6 class="mb-0">Messages</h6>
-                                <a href="messages.html">Show All</a>
+                                <a href="messages.php">Show All</a>
                             </div>
                             <div class="d-flex align-items-center border-bottom py-3">
                                 <img class="rounded-circle flex-shrink-0" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
@@ -405,7 +405,7 @@ mysqli_close($conn);
                         <div class="h-100 bg-secondary rounded p-4">
                             <div class="d-flex align-items-center justify-content-between mb-4">
                                 <h6 class="mb-0">To Do List</h6>
-                                <a href="todo.html">Show All</a>
+                                <a href="todo.php">Show All</a>
                             </div>
                             <div class="d-flex mb-2">
                                 <input class="form-control bg-dark border-0" type="text" placeholder="Enter task">
