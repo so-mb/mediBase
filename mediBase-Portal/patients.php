@@ -269,8 +269,8 @@ mysqli_close($conn);
                                     <th scope="col">Patient Name</th>
                                     <th scope="col">Birthdate</th>
                                     <th scope="col">Gender</th>
-                                    <th scope="col">Patient ID</th>
-                                    <th scope="col">Phone No.</th>
+                                    <th scope="col">Contact Number</th>
+                                    <th scope="col">Email</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
@@ -288,7 +288,7 @@ mysqli_close($conn);
                                         echo "<td>" . htmlspecialchars($row['gender']) . "</td>";
                                         echo "<td>" . htmlspecialchars($row['mobile_phone']) . "</td>";
                                         echo "<td>" . htmlspecialchars($row['email']) . "</td>"; // COMMENT: consider changes this to Patient ID
-                                        echo "<td><a class='btn btn-sm btn-primary openPopupBtn'><i class='fa fa-address-card me-2'></i>View</a></td>";
+                                        echo "<td><a class='btn btn-sm btn-primary openPopupBtn' data-popup-target='doctorInfoPopup'><i class='fa fa-address-card me-2'></i>View</a></td>";
                                         echo "</tr>";
                                     }
                                 } else {
