@@ -316,7 +316,7 @@ mysqli_close($conn);
                                         echo "<td>" . htmlspecialchars($row['gender']) . "</td>";
                                         echo "<td>" . htmlspecialchars($row['mobile_phone']) . "</td>";
                                         echo "<td>" . htmlspecialchars($row['email']) . "</td>";
-                                        echo "<td><a class='btn btn-sm btn-primary openPopupBtn' data-popup-target='doctorInfoPopup'><i class='fa fa-address-card me-2'></i>View</a></td>";
+                                        echo "<td><a class='btn btn-sm btn-primary openPopupBtn' data-popup-target='patientInfoPopup'><i class='fa fa-address-card me-2'></i>View</a></td>";
                                         echo "</tr>";
                                     }
                                 } else {
@@ -327,29 +327,39 @@ mysqli_close($conn);
                         </table>
                     </div>
                     <!-- Patient Info Popup -->
+                    <!-- Patient Info Form -->
                     <div id="patientInfoPopup" class="popup">
                         <div class="popup-content">
                             <span class="close">&times;</span>
                             <h2>Patient Profile Information</h2>
-                            <p><strong>First Name: </strong><span class="patient-editable-field">Lukas</span></p>
-                            <p><strong>Last Name: </strong><span class="patient-editable-field">Walker</span></p>
-                            <p><strong>Date of Birth: </strong><span>02.01.1999</span></p>
-                            <p><strong>Gender: </strong><span>Male</span></p>
-                            <p><strong>Nationality: </strong><span class="patient-editable-field">Sweden</span></p>
-                            <p><strong>Health Insurance No.: </strong><span class="patient-editable-field">J700072634</span></p>
-                            <p><strong>Email Address: </strong><span class="patient-editable-field">lukas.walker@gmail.com</span></p>
-                            <p><strong>Phone No.:: </strong><span class="patient-editable-field">06428490257923</span></p>
-                            <p><strong>Emergency Contact Name: </strong><span class="patient-editable-field">Divi Müller</span></p>
-                            <p><strong>Height: </strong><span class="patient-editable-field">160 cm</span></p>
-                            <p><strong>Weight: </strong><span class="patient-editable-field">90 kg</span></p>
-                            <p><strong>Allergies: </strong><span class="patient-editable-field">Penicillin</span></p>
-                            <p><strong>Chronic Diseases: </strong><span class="patient-editable-field">Diabestes Type II</span></p>
-                            <p><strong>Disabilities: </strong><span class="patient-editable-field">None</span></p>
-                            <p><strong>Vaccines: </strong><span class="patient-editable-field">Pfizer</span></p>
-                            <p><strong>Medications: </strong><span class="patient-editable-field">Paracetamol</span></p>
-                            <button class="btn btn-sm btn-primary" id="editPatientInfoBtn"><i class="fa fa-user-pen me-2"></i>Edit Info</button>
+                            <form action="your-server-side-script.php" method="post">
+                                <p><strong>First Name: </strong><input type="text" name="firstName" value="Lukas"></p>
+                                <p><strong>Last Name: </strong><input type="text" name="lastName" value="Walker"></p>
+                                <p><strong>Date of Birth: </strong><input type="date" name="dob" value="1999-01-02"></p>
+                                <p><strong>Gender: </strong>
+                                    <select name="gender">
+                                        <option value="Male" selected>Male</option>
+                                        <option value="Female">Female</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </p>
+                                <p><strong>Nationality: </strong><input type="text" name="nationality" value="Sweden"></p>
+                                <p><strong>Health Insurance No.: </strong><input type="text" name="insuranceNo" value="J700072634"></p>
+                                <p><strong>Email Address: </strong><input type="email" name="email" value="lukas.walker@gmail.com"></p>
+                                <p><strong>Phone No.: </strong><input type="tel" name="phoneNo" value="06428490257923"></p>
+                                <p><strong>Emergency Contact Name: </strong><input type="text" name="emergencyContact" value="Divi Müller"></p>
+                                <p><strong>Height: </strong><input type="number" name="height" value="160"> cm</p>
+                                <p><strong>Weight: </strong><input type="number" name="weight" value="90"> kg</p>
+                                <p><strong>Allergies: </strong><input type="text" name="allergies" value="Penicillin"></p>
+                                <p><strong>Chronic Diseases: </strong><input type="text" name="chronicDiseases" value="Diabetes Type II"></p>
+                                <p><strong>Disabilities: </strong><input type="text" name="disabilities" value="None"></p>
+                                <p><strong>Vaccines: </strong><input type="text" name="vaccines" value="Pfizer"></p>
+                                <p><strong>Medications: </strong><input type="text" name="medications" value="Paracetamol"></p>
+                                <button type="button" class="btn btn-sm btn-primary" id="editPatientInfoBtn"><i class="fa fa-save me-2"></i>Edit Info</button>
+                            </form>
                         </div>
                     </div>
+
                 </div>
             </div>
             <!-- Table End -->
