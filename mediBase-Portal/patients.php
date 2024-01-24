@@ -334,7 +334,7 @@ mysqli_close($conn);
                         <div class="popup-content">
                             <span class="close">&times;</span>
                             <h2>Patient Profile Information</h2>
-                            <form action="your-server-side-script.php" method="post">
+                            <form action="<?php htmlspecialchars($_SERVER["PHP_SELF"]) ?>" method="post">
                                 <p><strong>First Name: </strong><input type="text" name="firstName" value="Lukas"></p>
                                 <p><strong>Last Name: </strong><input type="text" name="lastName" value="Walker"></p>
                                 <p><strong>Date of Birth: </strong><span>02.01.2001</span></p>

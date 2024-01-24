@@ -2,7 +2,7 @@
 $db_server = "localhost";
 $db_user = "root";
 $db_pass = "";
-$db_name = "medibase";
+$db_name = "old_medibase";
 $conn = "";
 
 try {

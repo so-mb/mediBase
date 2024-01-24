@@ -99,7 +99,7 @@ mysqli_close($conn);
                                         <li class="nav-item active">
                                             <a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
                                         </li>
-                                        <li class="nav-item dropdown">
+                                        <!-- <li class="nav-item dropdown">
                                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pages</a>
                                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                                 <a class="dropdown-item" href="index.php">Home</a>
@@ -111,7 +111,7 @@ mysqli_close($conn);
                                                 <a class="dropdown-item" href="elements.html">Elements</a>
                                                 <a class="dropdown-item" href="index-icons.html">All Icons</a>
                                             </div>
-                                        </li>
+                                        </li> -->
                                         <li class="nav-item">
                                             <a class="nav-link" href="about-us.html">About Us</a>
                                         </li>
@@ -126,7 +126,7 @@ mysqli_close($conn);
                                         </li>
                                     </ul>
                                     <!-- Appointment Button -->
-                                    <a href="#" class="btn medilife-appoint-btn ml-30">For <span>emergencies</span> Click here</a>
+                                    <a href="mediBase-Portal/signin.php" class="btn medilife-appoint-btn ml-30">Login to <span>mediBase</span> Portal</a>
                                 </div>
                             </nav>
                         </div>
@@ -148,7 +148,7 @@ mysqli_close($conn);
                             <div class="hero-slides-content">
                                 <h2 data-animation="fadeInUp" data-delay="100ms">Medical Services that <br>You can Trust 100%</h2>
                                 <h6 data-animation="fadeInUp" data-delay="400ms">Enhance Your Life Quality with Better Health!</h6>
-                                <a href="#" class="btn medilife-btn mt-50" data-animation="fadeInUp" data-delay="700ms">Discover mediBase <span>+</span></a>
+                                <a href="about-us.html" class="btn medilife-btn mt-50" data-animation="fadeInUp" data-delay="700ms">Discover mediBase <span>+</span></a>
                             </div>
                         </div>
                     </div>
@@ -162,7 +162,7 @@ mysqli_close($conn);
                             <div class="hero-slides-content">
                                 <h2 data-animation="fadeInUp" data-delay="100ms">Medical Services that <br>You can Trust 100%</h2>
                                 <h6 data-animation="fadeInUp" data-delay="400ms">mediBase offers compassionate, cutting-edge medical services in a patient-centered environment. With state-of-the-art facilities and dedicated healthcare professionals, we prioritize your well-being and strive for excellence in healthcare.</h6>
-                                <a href="#" class="btn medilife-btn mt-50" data-animation="fadeInUp" data-delay="700ms">Discover mediBase <span>+</span></a>
+                                <a href="about-us.html" class="btn medilife-btn mt-50" data-animation="fadeInUp" data-delay="700ms">Discover mediBase <span>+</span></a>
                             </div>
                         </div>
                     </div>
@@ -176,7 +176,7 @@ mysqli_close($conn);
                             <div class="hero-slides-content">
                                 <h2 data-animation="fadeInUp" data-delay="100ms">Medical Services that <br>You can Trust 100%</h2>
                                 <h6 data-animation="fadeInUp" data-delay="400ms">We provide you with a comprehensive variety of medical services around-the-clock, from basic care to customized, modern medicine at a global scale, as one of the biggest and most prestigious medical institutions.</h6>
-                                <a href="#" class="btn medilife-btn mt-50" data-animation="fadeInUp" data-delay="700ms">Discover mediBase <span>+</span></a>
+                                <a href="about-us.html" class="btn medilife-btn mt-50" data-animation="fadeInUp" data-delay="700ms">Discover mediBase <span>+</span></a>
                             </div>
                         </div>
                     </div>
@@ -303,8 +303,8 @@ mysqli_close($conn);
                     <div class="medica-about-content">
                         <h2>We always put our patients first</h2>
                         <p>The Best Care in General Practice and Medicine!Offering Complete Medical Services For Your Entire Household.
- </p>
-                        <a href="#" class="btn medilife-btn mt-50">View the services <span>+</span></a>
+                        </p>
+                        <a href="services.html" class="btn medilife-btn mt-50">View the services <span>+</span></a>
                     </div>
                 </div>
                 <div class="col-12 col-lg-8">
@@ -451,7 +451,7 @@ mysqli_close($conn);
                     <div class="features-content">
                         <h2>A new way to treat patients in a revolutionary facility</h2>
                         <p>Welcome to medibase, Where Expertise Meets Empathy! Explore our state-of-the-art facility dedicated to comprehensive healthcare, from the miracle of childbirth in our cutting-edge labor and delivery section to the rapid response and compassionate care provided in our top-tier Emergency Department. Your well-being is our priority at every step of your journey.</p>
-                        <a href="#" class="btn medilife-btn mt-50">View our services <span>+</span></a>
+                        <a href="services.html" class="btn medilife-btn mt-50">View our services <span>+</span></a>
                     </div>
                 </div>
                 <div class="col-12 col-lg-6">
