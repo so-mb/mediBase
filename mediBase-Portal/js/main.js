@@ -227,11 +227,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
         function makeFieldsEditable(editable) {
             inputs.forEach(function (input) {
-                input.disabled = !editable;
+                if (!input.classList.contains('non-editable')) {
+                    input.disabled = !editable;
+                }
             });
             editButton.textContent = editable ? 'Update Info' : 'Edit Info';
             isEditable = editable;
         }
+
 
         // Initially, make fields not editable
         makeFieldsEditable(false);
@@ -259,6 +262,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Setup for Patient Info Edit Button
     setupEditToggle('editPatientInfoBtn', '#patientInfoPopup form');
+    setupEditToggle('editDoctorInfoBtn', '#doctorInfoPopup form');
 
     // Additional setups for other forms can be added in a similar way
 });

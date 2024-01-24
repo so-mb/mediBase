@@ -240,34 +240,36 @@ mysqli_close($conn);
                             <div class="popup-content">
                                 <span class="close">&times;</span>
                                 <h2>Doctor Profile Information</h2>
-                                <p><strong>First Name: </strong><span class="doctor-editable-field">Alice</span></p>
-                                <p><strong>Last Name: </strong><span class="doctor-editable-field">Chaltikyan</span></p>
-                                <p><strong>Date of Birth: </strong><span>02.01.1988</span></p>
-                                <p><strong>Gender: </strong><span>Female</span></p>
-                                <p><strong>Nationality: </strong><span class="doctor-editable-field">Germany</span></p>
-                                <p><strong>Email Address: </strong><span class="doctor-editable-field">lukas.walker@gmail.com</span></p>
-                                <p><strong>Phone No.:: </strong><span class="doctor-editable-field">06428490257923</span></p>
-                                <p><strong>Address: </strong><span class="doctor-editable-field">Alois-Gäßl-Straße 4</span></p>
-                                <p><strong>License No.: </strong><span class="doctor-editable-field">8239629247</span></p>
-                                <p>
-                                    <label for="department"><strong>Department: </strong></label>
-                                    <select name="Department" id="department" class="doctor-editable-field">
-                                        <option value="Cardiology">Cardiology</option>
-                                        <option value="Orthopedics">Orthopedics</option>
-                                        <option value="Dermatology">Dermatology</option>
-                                    </select>
-                                </p>
-                                <p>
-                                    <label for="position"><strong>Position (role): </strong></label>
-                                    <select name="Position" id="position" class="doctor-editable-field">
-                                        <option value="Cardiology">Medical Doctor (MD)</option>
-                                        <option value="Orthopedics">Consultant</option>
-                                    </select>
-                                </p>
-                                <p><strong>Username: </strong><span class="doctor-editable-field">a.chaltikan</span></p>
-                                <p><strong>Password: </strong><span class="doctor-editable-field">ljXVk6bBKtvbhqK</span></p>
-                                <p><strong>Emergency Contact Name: </strong><span class="doctor-editable-field">Divi Müller</span></p>
-                                <button class="btn btn-sm btn-primary" id="editDoctorInfoBtn"><i class="fa fa-user-pen me-2"></i>Edit Info</button>
+                                <form id="doctorProfileForm" action="your-server-side-script.php" method="post">
+                                    <p><strong>First Name: </strong><input type="text" name="firstName" value="Alice"></p>
+                                    <p><strong>Last Name: </strong><input type="text" name="lastName" value="Chaltikyan"></p>
+                                    <p><strong>Date of Birth: </strong><span>02.01.1988</span></p>
+                                    <p><strong>Gender: </strong><span>Female</span></p>
+                                    <p><strong>Nationality: </strong><input type="text" name="nationality" value="Germany"></p>
+                                    <p><strong>Email Address: </strong><input type="email" name="email" value="alice.chaltikyan@example.com"></p>
+                                    <p><strong>Phone No.: </strong><input type="tel" name="phone" value="06428490257923"></p>
+                                    <p><strong>Address: </strong><input type="text" name="address" value="Alois-Gäßl-Straße 4"></p>
+                                    <p><strong>License No.: </strong><input type="text" name="licenseNo" value="8239629247"></p>
+                                    <p>
+                                        <label for="department"><strong>Department: </strong></label>
+                                        <select name="department" id="department">
+                                            <option value="Cardiology">Cardiology</option>
+                                            <option value="Orthopedics">Orthopedics</option>
+                                            <option value="Dermatology">Dermatology</option>
+                                        </select>
+                                    </p>
+                                    <p>
+                                        <label for="position"><strong>Position (role): </strong></label>
+                                        <select name="position" id="position">
+                                            <option value="MD">Medical Doctor (MD)</option>
+                                            <option value="Consultant">Consultant</option>
+                                        </select>
+                                    </p>
+                                    <p><strong>Username: </strong><input type="text" name="username" value="a.chaltikan"></p>
+                                    <p><strong>Password: </strong><input type="password" name="password" value="ljXVk6bBKtvbhqK"></p>
+
+                                    <button type="button" class="btn btn-sm btn-primary" id="editDoctorInfoBtn"><i class="fa fa-user-pen me-2"></i>Edit Info</button>
+                                </form>
                             </div>
                         </div>
                         <!-- Settings Message Popup -->
@@ -335,14 +337,8 @@ mysqli_close($conn);
                             <form action="your-server-side-script.php" method="post">
                                 <p><strong>First Name: </strong><input type="text" name="firstName" value="Lukas"></p>
                                 <p><strong>Last Name: </strong><input type="text" name="lastName" value="Walker"></p>
-                                <p><strong>Date of Birth: </strong><input type="date" name="dob" value="1999-01-02"></p>
-                                <p><strong>Gender: </strong>
-                                    <select name="gender">
-                                        <option value="Male" selected>Male</option>
-                                        <option value="Female">Female</option>
-                                        <option value="Other">Other</option>
-                                    </select>
-                                </p>
+                                <p><strong>Date of Birth: </strong><span>02.01.2001</span></p>
+                                <p><strong>Gender: </strong><span>Male</span></p>
                                 <p><strong>Nationality: </strong><input type="text" name="nationality" value="Sweden"></p>
                                 <p><strong>Health Insurance No.: </strong><input type="text" name="insuranceNo" value="J700072634"></p>
                                 <p><strong>Email Address: </strong><input type="email" name="email" value="lukas.walker@gmail.com"></p>
@@ -356,6 +352,7 @@ mysqli_close($conn);
                                 <p><strong>Vaccines: </strong><input type="text" name="vaccines" value="Pfizer"></p>
                                 <p><strong>Medications: </strong><input type="text" name="medications" value="Paracetamol"></p>
                                 <button type="button" class="btn btn-sm btn-primary" id="editPatientInfoBtn"><i class="fa fa-save me-2"></i>Edit Info</button>
+                                <button type="button" class="btn btn-sm btn-primary" id="deletePatientProfileBtn"><i class="fa fa-trash me-2"></i>Delete Patient Profile</button>
                             </form>
                         </div>
                     </div>
