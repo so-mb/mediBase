@@ -2,18 +2,41 @@
 include("connection.php");
 
 session_start();
+// Get doctors for speciality
+$doctors_sql = "SELECT name FROM doctors;";
+$doctors_result = mysqli_query($conn, $doctors_sql);
 
 // Book an Appointment
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $speciality = filter_input(INPUT_POST, "speciality", FILTER_SANITIZE_SPECIAL_CHARS);
+    $doctor_name = filter_input(INPUT_POST, "doctors", FILTER_SANITIZE_SPECIAL_CHARS);
+    $datetime = $_POST["datetime"];
+    $patient_id = filter_input(INPUT_POST, "id", FILTER_SANITIZE_NUMBER_INT);
+    $patient_name = filter_input(INPUT_POST, "name", FILTER_SANITIZE_SPECIAL_CHARS);
+    $consultation_type =
+        filter_input(INPUT_POST, "consultation_type", FILTER_SANITIZE_SPECIAL_CHARS);
+    $comments =
+        filter_input(INPUT_POST, "message", FILTER_SANITIZE_SPECIAL_CHARS);
 
-    // Get doctors for speciality
-    $doctors_sql = ""
-    // if (mysqli_query($conn, $register_sql)) {
-    //     header("Location: index.php");
-    //     exit();
-    // };
+    // Get Doctor's ID
+    $doc_id_sql = "SELECT id FROM doctors WHERE name = '$doctor_name';";
+    $doc_id_result = $conn->query($doc_id_sql);
+    if ($doc_id_result && $doc_id_result->num_rows > 0) {
+        $row = $doc_id_result->fetch_assoc();
+        $doctor_id = $row["id"];
+    }
+
+    // INSERT query
+    $book_sql = "INSERT INTO `appointments` (`patient_id`, `doctor_id`, `date_time`,
+                `consultation_type`, `status`, `symptoms`)
+                VALUES ('$patient_id', '$doctor_id', '$datetime',
+                '$consultation_type', 'pending', '$comments');";
+
+    if (mysqli_query($conn, $book_sql)) {
+        header("Location: index.php");
+        exit();
+    };
 }
 
 mysqli_close($conn);
@@ -66,7 +89,7 @@ mysqli_close($conn);
                         <div class="main-menu h-100">
                             <nav class="navbar h-100 navbar-expand-lg">
                                 <!-- Logo Area  -->
-                                <a class="navbar-brand" href="index.html"><img src="img/core-img/logo.png" alt="Logo"></a>
+                                <a class="navbar-brand" href="index.php"><img src="img/core-img/logo.png" alt="Logo"></a>
 
                                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#medilifeMenu" aria-controls="medilifeMenu" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
 
@@ -74,7 +97,7 @@ mysqli_close($conn);
                                     <!-- Menu Area -->
                                     <ul class="navbar-nav ml-auto">
                                         <li class="nav-item active">
-                                            <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+                                            <a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
                                         </li>
                                         <li class="nav-item dropdown">
                                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pages</a>
@@ -177,10 +200,11 @@ mysqli_close($conn);
                                             <div class="col-12 col-md-4">
                                                 <div class="form-group">
                                                     <select class="form-control" id="speciality" name="speciality">
+                                                        <option value="" disabled selected hidden>Speciality</option>
                                                         <option value="Cardiology">Cardiology</option>
                                                         <option value="Orthopedics">Orthopedics</option>
                                                         <option value="Dermatology">Dermatology</option>
-                                                        <option value="Obstetrics and Gynecology (OB/GYN)">Obstetrics and Gynecology</option>
+                                                        <option value="Obstetrics and Gynecology (OB/GYN)">Obstetrics & Gynecology</option>
                                                         <option value="Psychiatry">Psychiatry</option>
                                                         <option value="Neurology">Neurology</option>
                                                         <option value="Emergency">Emergency</option>
@@ -189,12 +213,16 @@ mysqli_close($conn);
                                             </div>
                                             <div class="col-12 col-md-4">
                                                 <div class="form-group">
-                                                    <select class="form-control" id="doctors">
-                                                        <option>Doctors 1</option>
-                                                        <option>Doctors 2</option>
-                                                        <option>Doctors 3</option>
-                                                        <option>Doctors 4</option>
-                                                        <option>Doctors 5</option>
+                                                    <select class="form-control" id="doctors" name="doctors">
+                                                        <option value="" disabled selected hidden>Doctor</option>
+                                                        <?php
+                                                        if (mysqli_num_rows($doctors_result) > 0) {
+                                                            // Output data of each row
+                                                            while ($row = mysqli_fetch_assoc($doctors_result)) {
+                                                                echo '<option value="' . htmlspecialchars($row["name"]) . '">' . htmlspecialchars($row["name"]) . '</option>';
+                                                            }
+                                                        }
+                                                        ?>
                                                     </select>
                                                 </div>
                                             </div>
@@ -205,17 +233,25 @@ mysqli_close($conn);
                                             </div>
                                             <div class="col-12 col-md-4">
                                                 <div class="form-group">
+                                                    <input type="number" class="form-control border-top-0 border-right-0 border-left-0" name="id" id="number" placeholder="ID">
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-4">
+                                                <div class="form-group">
                                                     <input type="text" class="form-control border-top-0 border-right-0 border-left-0" name="name" id="name" placeholder="Name">
                                                 </div>
                                             </div>
                                             <div class="col-12 col-md-4">
                                                 <div class="form-group">
-                                                    <input type="text" class="form-control border-top-0 border-right-0 border-left-0" name="phone_no" id="number" placeholder="Phone">
-                                                </div>
-                                            </div>
-                                            <div class="col-12 col-md-4">
-                                                <div class="form-group">
-                                                    <input type="email" class="form-control border-top-0 border-right-0 border-left-0" name="email" id="email" placeholder="E-mail">
+                                                    <select class="form-control" id="consultation_type" name="consultation_type">
+                                                        <option value="" disabled selected hidden>Consultation Type</option>
+                                                        <option value="Routine Checkup">Routine Checkup</option>
+                                                        <option value="Medical Appointment">Medical Appointment</option>
+                                                        <option value="Home Visit">Home Visit</option>
+                                                        <option value="Initial Appointment">Initial Appointment</option>
+                                                        <option value="Telehealth Consultation">Telehealth Consultation</option>
+                                                        <option value="Out of Hours">Out of Hours</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-md-7">
@@ -676,7 +712,6 @@ mysqli_close($conn);
     <script src="js/plugins.js"></script>
     <!-- Active js -->
     <script src="js/active.js"></script>
-
 </body>
 
 </html>
