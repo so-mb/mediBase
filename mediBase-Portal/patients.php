@@ -249,8 +249,21 @@ mysqli_close($conn);
                                 <p><strong>Phone No.:: </strong><span class="doctor-editable-field">06428490257923</span></p>
                                 <p><strong>Address: </strong><span class="doctor-editable-field">Alois-Gäßl-Straße 4</span></p>
                                 <p><strong>License No.: </strong><span class="doctor-editable-field">8239629247</span></p>
-                                <p><strong>Department: </strong><span class="doctor-editable-field">Pediatrics</span></p>
-                                <p><strong>Position (role): </strong><span class="doctor-editable-field">Senior Coordinator</span></p>
+                                <p>
+                                    <label for="department"><strong>Department: </strong></label>
+                                    <select name="Department" id="department" class="doctor-editable-field">
+                                        <option value="Cardiology">Cardiology</option>
+                                        <option value="Orthopedics">Orthopedics</option>
+                                        <option value="Dermatology">Dermatology</option>
+                                    </select>
+                                </p>
+                                <p>
+                                    <label for="position"><strong>Position (role): </strong></label>
+                                    <select name="Position" id="position" class="doctor-editable-field">
+                                        <option value="Cardiology">Medical Doctor (MD)</option>
+                                        <option value="Orthopedics">Consultant</option>
+                                    </select>
+                                </p>
                                 <p><strong>Username: </strong><span class="doctor-editable-field">a.chaltikan</span></p>
                                 <p><strong>Password: </strong><span class="doctor-editable-field">ljXVk6bBKtvbhqK</span></p>
                                 <p><strong>Emergency Contact Name: </strong><span class="doctor-editable-field">Divi Müller</span></p>
