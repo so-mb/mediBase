@@ -239,7 +239,22 @@ mysqli_close($conn);
                         <div id="doctorInfoPopup" class="popup">
                             <div class="popup-content">
                                 <span class="close">&times;</span>
-                                <p>Doctor Profile Information...</p>
+                                <h2>Doctor Profile Information</h2>
+                                <p><strong>First Name: </strong><span class="doctor-editable-field">Alice</span></p>
+                                <p><strong>Last Name: </strong><span class="doctor-editable-field">Chaltikyan</span></p>
+                                <p><strong>Date of Birth: </strong><span>02.01.1988</span></p>
+                                <p><strong>Gender: </strong><span>Female</span></p>
+                                <p><strong>Nationality: </strong><span class="doctor-editable-field">Germany</span></p>
+                                <p><strong>Email Address: </strong><span class="doctor-editable-field">lukas.walker@gmail.com</span></p>
+                                <p><strong>Phone No.:: </strong><span class="doctor-editable-field">06428490257923</span></p>
+                                <p><strong>Address: </strong><span class="doctor-editable-field">Alois-Gäßl-Straße 4</span></p>
+                                <p><strong>License No.: </strong><span class="doctor-editable-field">8239629247</span></p>
+                                <p><strong>Department: </strong><span class="doctor-editable-field">Pediatrics</span></p>
+                                <p><strong>Position (role): </strong><span class="doctor-editable-field">Senior Coordinator</span></p>
+                                <p><strong>Username: </strong><span class="doctor-editable-field">a.chaltikan</span></p>
+                                <p><strong>Password: </strong><span class="doctor-editable-field">ljXVk6bBKtvbhqK</span></p>
+                                <p><strong>Emergency Contact Name: </strong><span class="doctor-editable-field">Divi Müller</span></p>
+                                <button class="btn btn-sm btn-primary" id="editDoctorInfoBtn"><i class="fa fa-user-pen me-2"></i>Edit Info</button>
                             </div>
                         </div>
                         <!-- Settings Message Popup -->
@@ -287,7 +302,7 @@ mysqli_close($conn);
                                         echo "<td>" . htmlspecialchars($formattedDate) . "</td>";
                                         echo "<td>" . htmlspecialchars($row['gender']) . "</td>";
                                         echo "<td>" . htmlspecialchars($row['mobile_phone']) . "</td>";
-                                        echo "<td>" . htmlspecialchars($row['email']) . "</td>"; // COMMENT: consider changes this to Patient ID
+                                        echo "<td>" . htmlspecialchars($row['email']) . "</td>";
                                         echo "<td><a class='btn btn-sm btn-primary openPopupBtn' data-popup-target='doctorInfoPopup'><i class='fa fa-address-card me-2'></i>View</a></td>";
                                         echo "</tr>";
                                     }
@@ -302,7 +317,24 @@ mysqli_close($conn);
                     <div id="patientInfoPopup" class="popup">
                         <div class="popup-content">
                             <span class="close">&times;</span>
-                            <p>Patient Profile Information...</p>
+                            <h2>Patient Profile Information</h2>
+                            <p><strong>First Name: </strong><span class="patient-editable-field">Lukas</span></p>
+                            <p><strong>Last Name: </strong><span class="patient-editable-field">Walker</span></p>
+                            <p><strong>Date of Birth: </strong><span>02.01.1999</span></p>
+                            <p><strong>Gender: </strong><span>Male</span></p>
+                            <p><strong>Nationality: </strong><span class="patient-editable-field">Sweden</span></p>
+                            <p><strong>Health Insurance No.: </strong><span class="patient-editable-field">J700072634</span></p>
+                            <p><strong>Email Address: </strong><span class="patient-editable-field">lukas.walker@gmail.com</span></p>
+                            <p><strong>Phone No.:: </strong><span class="patient-editable-field">06428490257923</span></p>
+                            <p><strong>Emergency Contact Name: </strong><span class="patient-editable-field">Divi Müller</span></p>
+                            <p><strong>Height: </strong><span class="patient-editable-field">160 cm</span></p>
+                            <p><strong>Weight: </strong><span class="patient-editable-field">90 kg</span></p>
+                            <p><strong>Allergies: </strong><span class="patient-editable-field">Penicillin</span></p>
+                            <p><strong>Chronic Diseases: </strong><span class="patient-editable-field">Diabestes Type II</span></p>
+                            <p><strong>Disabilities: </strong><span class="patient-editable-field">None</span></p>
+                            <p><strong>Vaccines: </strong><span class="patient-editable-field">Pfizer</span></p>
+                            <p><strong>Medications: </strong><span class="patient-editable-field">Paracetamol</span></p>
+                            <button class="btn btn-sm btn-primary" id="editPatientInfoBtn"><i class="fa fa-user-pen me-2"></i>Edit Info</button>
                         </div>
                     </div>
                 </div>

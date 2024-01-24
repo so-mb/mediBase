@@ -261,7 +261,7 @@
 .popup {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
-    z-index: 1000; /* Sit on top */
+    z-index: 2000; /* Sit on top */
     left: 0;
     top: 0;
     width: 100%;
@@ -273,11 +273,27 @@
 
 /* Popup Content */
 .popup-content {
-    background-color: #fefefe;
+    color: #808080;
+    background-color: #1A1C24;
     margin: 15% auto; /* 15% from the top and centered */
     padding: 20px;
     border: 1px solid #888;
     width: 80%; /* Could be more or less, depending on screen size */
+}
+
+.popup-content > h2 {
+    color: #fff;
+    margin-top: 5px;
+    margin-bottom: 40px;
+}
+
+.popup-content > p > span {
+    color: #fff;
+}
+
+#editDoctorInfoBtn,
+#editPatientInfoBtn {
+    margin-top: 25px;
 }
 
 /* The Close Button */
@@ -290,7 +306,14 @@
 
 .close:hover,
 .close:focus {
-    color: black;
+    color: white;
     text-decoration: none;
     cursor: pointer;
 }
+
+/* Prevent Scroll When Popup is Open */
+.no-scroll {
+    overflow: hidden;
+    height: 100%;
+}
+
