@@ -94,52 +94,74 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 // EDIT PATIENT'S INFO
-/* document.addEventListener('DOMContentLoaded', function () {
-    var editButton = document.getElementById('editPatientInfoBtn');
-    var editableFields = document.querySelectorAll('.editable-field');
-    
-    var isEditable = false;
-    var isEdited = false; // Flag to track if any field is edited
+document.addEventListener('DOMContentLoaded', function () {
+    function setupEditToggle(editButtonId, fieldsSelector) {
+        var editButton = document.getElementById(editButtonId);
+        var editableFields = document.querySelectorAll(fieldsSelector);
+        
+        var isEditable = false;
+        var isEdited = false;
 
-    // Function to set isEdited to true
-    function fieldEdited() {
-        if (!isEdited) {
-            isEdited = true;
-            editButton.textContent = 'Save Changes';
+        function fieldEdited() {
+            if (!isEdited) {
+                isEdited = true;
+                editButton.textContent = 'Save Changes';
+            }
         }
+
+        // Adding input event listener to each field
+        editableFields.forEach(function(field) {
+            if (field.tagName === 'SELECT') {
+                // For select elements
+                field.disabled = true; // Initially disabled
+                field.addEventListener('change', fieldEdited);
+            } else {
+                // For other editable fields
+                field.addEventListener('input', fieldEdited);
+            }
+        });
+
+        editButton.addEventListener('click', function() {
+            if (isEditable) {
+                // Switching from editable to non-editable
+                if (isEdited) {
+                    // TODO: Handle data update
+                    console.log('Save data for', editButtonId);
+                    isEdited = false;
+                }
+                editableFields.forEach(function(field) {
+                    if (field.tagName === 'SELECT') {
+                        field.disabled = true;
+                    } else {
+                        field.contentEditable = false;
+                    }
+                });
+                this.textContent = 'Edit Info';
+            } else {
+                // Switching from non-editable to editable
+                editableFields.forEach(function(field) {
+                    if (field.tagName === 'SELECT') {
+                        field.disabled = false;
+                    } else {
+                        field.contentEditable = true;
+                    }
+                });
+                this.textContent = isEdited ? 'Save Changes' : 'Edit Info';
+            }
+
+            isEditable = !isEditable;
+        });
     }
 
-    // Adding input event listener to each field
-    editableFields.forEach(function(field) {
-        field.addEventListener('input', fieldEdited);
-    });
+    // Setup for Patient Info Edit Button
+    setupEditToggle('editPatientInfoBtn', '.patient-editable-field');
 
-    // Toggle contenteditable attribute for all editable fields
-    editButton.addEventListener('click', function() {
-        if (isEditable) {
-            // Switching from editable to non-editable
-            if (isEdited) {
-                // TODO: Handle data update
-                console.log('Save data');
-                isEdited = false;
-            }
-            editableFields.forEach(function(field) {
-                field.contentEditable = false;
-            });
-            this.textContent = 'Edit Patient Info';
-        } else {
-            // Switching from non-editable to editable
-            editableFields.forEach(function(field) {
-                field.contentEditable = true;
-            });
-            this.textContent = isEdited ? 'Save Changes' : 'Edit Patient Info';
-        }
+    // Setup for Doctor Info Edit Button
+    setupEditToggle('editDoctorInfoBtn', '.doctor-editable-field');
+});
 
-        isEditable = !isEditable;
-    });
-}); */
 
-document.addEventListener('DOMContentLoaded', function () {
+/* document.addEventListener('DOMContentLoaded', function () {
     // Function to handle edit toggle
     function setupEditToggle(editButtonId, fieldsSelector) {
         var editButton = document.getElementById(editButtonId);
@@ -191,4 +213,4 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Setup for Doctor Info Edit Button
     setupEditToggle('editDoctorInfoBtn', '.doctor-editable-field');
-});
+}); */
