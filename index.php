@@ -1,3 +1,47 @@
+<?php
+include("connection.php");
+
+session_start();
+// Get doctors for speciality
+$doctors_sql = "SELECT name FROM doctors;";
+$doctors_result = mysqli_query($conn, $doctors_sql);
+
+// Book an Appointment
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    $speciality = filter_input(INPUT_POST, "speciality", FILTER_SANITIZE_SPECIAL_CHARS);
+    $doctor_name = filter_input(INPUT_POST, "doctors", FILTER_SANITIZE_SPECIAL_CHARS);
+    $datetime = $_POST["datetime"];
+    $patient_id = filter_input(INPUT_POST, "id", FILTER_SANITIZE_NUMBER_INT);
+    $patient_name = filter_input(INPUT_POST, "name", FILTER_SANITIZE_SPECIAL_CHARS);
+    $consultation_type =
+        filter_input(INPUT_POST, "consultation_type", FILTER_SANITIZE_SPECIAL_CHARS);
+    $comments =
+        filter_input(INPUT_POST, "message", FILTER_SANITIZE_SPECIAL_CHARS);
+
+    // Get Doctor's ID
+    $doc_id_sql = "SELECT id FROM doctors WHERE name = '$doctor_name';";
+    $doc_id_result = $conn->query($doc_id_sql);
+    if ($doc_id_result && $doc_id_result->num_rows > 0) {
+        $row = $doc_id_result->fetch_assoc();
+        $doctor_id = $row["id"];
+    }
+
+    // INSERT query
+    $book_sql = "INSERT INTO `appointments` (`patient_id`, `doctor_id`, `date_time`,
+                `consultation_type`, `status`, `symptoms`)
+                VALUES ('$patient_id', '$doctor_id', '$datetime',
+                '$consultation_type', 'pending', '$comments');";
+
+    if (mysqli_query($conn, $book_sql)) {
+        header("Location: index.php");
+        exit();
+    };
+}
+
+mysqli_close($conn);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -45,7 +89,7 @@
                         <div class="main-menu h-100">
                             <nav class="navbar h-100 navbar-expand-lg">
                                 <!-- Logo Area  -->
-                                <a class="navbar-brand" href="index.html"><img src="img/core-img/logo.png" alt="Logo"></a>
+                                <a class="navbar-brand" href="index.php"><img src="img/core-img/logo.png" alt="Logo"></a>
 
                                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#medilifeMenu" aria-controls="medilifeMenu" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
 
@@ -53,12 +97,12 @@
                                     <!-- Menu Area -->
                                     <ul class="navbar-nav ml-auto">
                                         <li class="nav-item active">
-                                            <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+                                            <a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
                                         </li>
                                         <li class="nav-item dropdown">
                                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pages</a>
                                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                                <a class="dropdown-item" href="index.html">Home</a>
+                                                <a class="dropdown-item" href="index.php">Home</a>
                                                 <a class="dropdown-item" href="about-us.html">About Us</a>
                                                 <a class="dropdown-item" href="services.html">Services</a>
                                                 <a class="dropdown-item" href="blog.html">News</a>
@@ -103,7 +147,7 @@
                         <div class="col-12">
                             <div class="hero-slides-content">
                                 <h2 data-animation="fadeInUp" data-delay="100ms">Medical Services that <br>You can Trust 100%</h2>
-                                <h6 data-animation="fadeInUp" data-delay="400ms">Lorem ipsum dolor sit amet, consectetuer adipiscing elit sed diam nonummy nibh euismod.</h6>
+                                <h6 data-animation="fadeInUp" data-delay="400ms">Enhance Your Life Quality with Better Health!</h6>
                                 <a href="#" class="btn medilife-btn mt-50" data-animation="fadeInUp" data-delay="700ms">Discover mediBase <span>+</span></a>
                             </div>
                         </div>
@@ -117,7 +161,7 @@
                         <div class="col-12">
                             <div class="hero-slides-content">
                                 <h2 data-animation="fadeInUp" data-delay="100ms">Medical Services that <br>You can Trust 100%</h2>
-                                <h6 data-animation="fadeInUp" data-delay="400ms">Lorem ipsum dolor sit amet, consectetuer adipiscing elit sed diam nonummy nibh euismod.</h6>
+                                <h6 data-animation="fadeInUp" data-delay="400ms">mediBase offers compassionate, cutting-edge medical services in a patient-centered environment. With state-of-the-art facilities and dedicated healthcare professionals, we prioritize your well-being and strive for excellence in healthcare.</h6>
                                 <a href="#" class="btn medilife-btn mt-50" data-animation="fadeInUp" data-delay="700ms">Discover mediBase <span>+</span></a>
                             </div>
                         </div>
@@ -131,7 +175,7 @@
                         <div class="col-12">
                             <div class="hero-slides-content">
                                 <h2 data-animation="fadeInUp" data-delay="100ms">Medical Services that <br>You can Trust 100%</h2>
-                                <h6 data-animation="fadeInUp" data-delay="400ms">Lorem ipsum dolor sit amet, consectetuer adipiscing elit sed diam nonummy nibh euismod.</h6>
+                                <h6 data-animation="fadeInUp" data-delay="400ms">We provide you with a comprehensive variety of medical services around-the-clock, from basic care to customized, modern medicine at a global scale, as one of the biggest and most prestigious medical institutions.</h6>
                                 <a href="#" class="btn medilife-btn mt-50" data-animation="fadeInUp" data-delay="700ms">Discover mediBase <span>+</span></a>
                             </div>
                         </div>
@@ -151,38 +195,45 @@
                         <div class="row no-gutters align-items-center">
                             <div class="col-12 col-lg-9">
                                 <div class="medilife-appointment-form">
-                                    <form action="#" method="post">
+                                    <form action="<?php htmlspecialchars($_SERVER["PHP_SELF"]) ?>" method="post">
                                         <div class="row align-items-end">
                                             <div class="col-12 col-md-4">
                                                 <div class="form-group">
-                                                    <select class="form-control" id="speciality">
-                                                    <option>Speciality 1</option>
-                                                    <option>Speciality 2</option>
-                                                    <option>Speciality 3</option>
-                                                    <option>Speciality 4</option>
-                                                    <option>Speciality 5</option>
-                                                </select>
+                                                    <select class="form-control" id="speciality" name="speciality">
+                                                        <option value="" disabled selected hidden>Speciality</option>
+                                                        <option value="Cardiology">Cardiology</option>
+                                                        <option value="Orthopedics">Orthopedics</option>
+                                                        <option value="Dermatology">Dermatology</option>
+                                                        <option value="Obstetrics and Gynecology (OB/GYN)">Obstetrics & Gynecology</option>
+                                                        <option value="Psychiatry">Psychiatry</option>
+                                                        <option value="Neurology">Neurology</option>
+                                                        <option value="Emergency">Emergency</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-md-4">
                                                 <div class="form-group">
-                                                    <select class="form-control" id="doctors">
-                                                    <option>Doctors 1</option>
-                                                    <option>Doctors 2</option>
-                                                    <option>Doctors 3</option>
-                                                    <option>Doctors 4</option>
-                                                    <option>Doctors 5</option>
-                                                </select>
+                                                    <select class="form-control" id="doctors" name="doctors">
+                                                        <option value="" disabled selected hidden>Doctor</option>
+                                                        <?php
+                                                        if (mysqli_num_rows($doctors_result) > 0) {
+                                                            // Output data of each row
+                                                            while ($row = mysqli_fetch_assoc($doctors_result)) {
+                                                                echo '<option value="' . htmlspecialchars($row["name"]) . '">' . htmlspecialchars($row["name"]) . '</option>';
+                                                            }
+                                                        }
+                                                        ?>
+                                                    </select>
                                                 </div>
                                             </div>
-                                            <div class="col-12 col-md-2">
+                                            <div class="col-12 col-md-4">
                                                 <div class="form-group">
-                                                    <input type="text" class="form-control" name="date" id="date" placeholder="Date">
+                                                    <input type="datetime-local" class="form-control" name="datetime" id="date" placeholder="Date">
                                                 </div>
                                             </div>
-                                            <div class="col-12 col-md-2">
+                                            <div class="col-12 col-md-4">
                                                 <div class="form-group">
-                                                    <input type="text" class="form-control" name="time" id="time" placeholder="Time">
+                                                    <input type="number" class="form-control border-top-0 border-right-0 border-left-0" name="id" id="number" placeholder="ID">
                                                 </div>
                                             </div>
                                             <div class="col-12 col-md-4">
@@ -192,12 +243,15 @@
                                             </div>
                                             <div class="col-12 col-md-4">
                                                 <div class="form-group">
-                                                    <input type="text" class="form-control border-top-0 border-right-0 border-left-0" name="number" id="number" placeholder="Phone">
-                                                </div>
-                                            </div>
-                                            <div class="col-12 col-md-4">
-                                                <div class="form-group">
-                                                    <input type="email" class="form-control border-top-0 border-right-0 border-left-0" name="email" id="email" placeholder="E-mail">
+                                                    <select class="form-control" id="consultation_type" name="consultation_type">
+                                                        <option value="" disabled selected hidden>Consultation Type</option>
+                                                        <option value="Routine Checkup">Routine Checkup</option>
+                                                        <option value="Medical Appointment">Medical Appointment</option>
+                                                        <option value="Home Visit">Home Visit</option>
+                                                        <option value="Initial Appointment">Initial Appointment</option>
+                                                        <option value="Telehealth Consultation">Telehealth Consultation</option>
+                                                        <option value="Out of Hours">Out of Hours</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-md-7">
@@ -247,8 +301,9 @@
             <div class="row">
                 <div class="col-12 col-lg-4">
                     <div class="medica-about-content">
-                        <h2>We always put our pacients first</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Lorem ipsum dolor sit amet, consectetuer adipiscing eli.</p>
+                        <h2>We always put our patients first</h2>
+                        <p>The Best Care in General Practice and Medicine!Offering Complete Medical Services For Your Entire Household.
+ </p>
                         <a href="#" class="btn medilife-btn mt-50">View the services <span>+</span></a>
                     </div>
                 </div>
@@ -262,7 +317,7 @@
                                 </div>
                                 <div class="service-content">
                                     <h5>The Best Doctors</h5>
-                                    <p>Lorem ipsum dolor sit amet, consecte tuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut.</p>
+                                    <p>Your health is our priority we are dedicated to your well-being, every step of the way.</p>
                                 </div>
                             </div>
                         </div>
@@ -273,8 +328,8 @@
                                     <i class="icon-blood-donation-1"></i>
                                 </div>
                                 <div class="service-content">
-                                    <h5>Baby Nursery</h5>
-                                    <p>Dolor sit amet, consecte tuer elit, sed diam nonummy nibh euismod tincidunt ut ldolore magna.</p>
+                                    <h5>Top Maternity Care</h5>
+                                    <p>In mediBase we believe in a healthcare experience that goes beyond medical treatment – it's a journey where healing meets hospitality.</p>
                                 </div>
                             </div>
                         </div>
@@ -285,8 +340,8 @@
                                     <i class="icon-flask-2"></i>
                                 </div>
                                 <div class="service-content">
-                                    <h5>Laboratory</h5>
-                                    <p>Lorem ipsum dolor sit amet, consecte tuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut.</p>
+                                    <h5>Healthcare</h5>
+                                    <p>Experience a healthcare environment where your well-being is our priority, and where the intersection of compassion and proficiency defines our commitment to you.</p>
                                 </div>
                             </div>
                         </div>
@@ -298,7 +353,7 @@
                                 </div>
                                 <div class="service-content">
                                     <h5>Emergency Room</h5>
-                                    <p>Dolor sit amet, consecte tuer elit, sed diam nonummy nibh euismod tincidunt ut ldolore magna.</p>
+                                    <p>mediBase is where compassionate care and exceptional expertise converge seamlessly.</p>
                                 </div>
                             </div>
                         </div>
@@ -319,7 +374,7 @@
                         <i class="icon-blood-transfusion-2"></i>
                         <h2><span class="counter">5632</span></h2>
                         <h6>Blood donations</h6>
-                        <p>Dolor sit amet, consecte tuer adipiscing elit, sed diam nonummy nibh euismod tincidunt.</p>
+                        <p>At mediBase, our robust blood donation efforts support vital medical treatments and emergencies, reinforcing our commitment to community health.</p>
                     </div>
                 </div>
                 <!-- Single Cool Fact-->
@@ -328,7 +383,7 @@
                         <i class="icon-atoms"></i>
                         <h2><span class="counter">23</span>k</h2>
                         <h6>Patients</h6>
-                        <p>Dolor sit amet, consecte tuer adipiscing elit, sed diam nonummy nibh euismod tincidunt.</p>
+                        <p>At mediBase personalized patient care is our priority, with a team of specialized doctors ensuring exceptional treatment for a healthier community.</p>
                     </div>
                 </div>
                 <!-- Single Cool Fact-->
@@ -337,7 +392,7 @@
                         <i class="icon-microscope"></i>
                         <h2><span class="counter">25</span></h2>
                         <h6>Specialities</h6>
-                        <p>Dolor sit amet, consecte tuer adipiscing elit, sed diam nonummy nibh euismod tincidunt.</p>
+                        <p>At medibase, we excel in diverse medical specialties, providing tailored and cutting-edge care for each patient.</p>
                     </div>
                 </div>
                 <!-- Single Cool Fact-->
@@ -346,7 +401,7 @@
                         <i class="icon-doctor-1"></i>
                         <h2><span class="counter">723</span></h2>
                         <h6>Doctors</h6>
-                        <p>Dolor sit amet, consecte tuer adipiscing elit, sed diam nonummy nibh euismod tincidunt.</p>
+                        <p>At mediBase our skilled professionals provide personalized and cutting-edge healthcare across diverse specialties.</p>
                     </div>
                 </div>
             </div>
@@ -395,7 +450,7 @@
                 <div class="col-12 col-lg-6">
                     <div class="features-content">
                         <h2>A new way to treat patients in a revolutionary facility</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Lorem ipsum dolor sit amet, consectetuer adipiscing eli.Lorem ipsum dolor sit amet, consec tetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Lorem ipsum dolor sit amet, consectetuer.</p>
+                        <p>Welcome to medibase, Where Expertise Meets Empathy! Explore our state-of-the-art facility dedicated to comprehensive healthcare, from the miracle of childbirth in our cutting-edge labor and delivery section to the rapid response and compassionate care provided in our top-tier Emergency Department. Your well-being is our priority at every step of your journey.</p>
                         <a href="#" class="btn medilife-btn mt-50">View our services <span>+</span></a>
                     </div>
                 </div>
@@ -430,7 +485,7 @@
                                 <a href="#"><img src="img/blog-img/p1.jpg" alt=""></a>
                             </div>
                             <a href="#" class="headline">New drug release soon</a>
-                            <p>Dolor sit amet, consecte tuer adipiscing elit, sed diam nonummy nibh euismod tincidunt.</p>
+                            <p>Introducing New Drug – our latest breakthrough at medibase. Learn more about its potential benefits and our commitment to advancing medical solutions.</p>
                             <a href="#" class="comments">5 Comments</a>
                         </div>
                     </div>
@@ -452,7 +507,7 @@
                                 <a href="#"><img src="img/blog-img/p2.jpg" alt=""></a>
                             </div>
                             <a href="#" class="headline">Free Dental Care</a>
-                            <p>Dolor sit amet, consecte tuer adipiscing elit, sed diam nonummy nibh euismod tincidunt.</p>
+                            <p>Enjoy free dental care at mediBase for a brighter, healthier smile.</p>
                             <a href="#" class="comments">31 Comments</a>
                         </div>
                     </div>
@@ -474,7 +529,7 @@
                                 <a href="#"><img src="img/blog-img/p3.jpg" alt=""></a>
                             </div>
                             <a href="#" class="headline">Good News For Our Patients</a>
-                            <p>Dolor sit amet, consecte tuer adipiscing elit, sed diam nonummy nibh euismod tincidunt.</p>
+                            <p>At mediBase, discover uplifting health stories and good news to brighten your journey toward well-being.</p>
                             <a href="#" class="comments">10 Comments</a>
                         </div>
                     </div>
@@ -544,7 +599,7 @@
                             <div class="footer-logo">
                                 <img src="img/core-img/logo.png" alt="">
                             </div>
-                            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Lorem ipsum dolor sit amet, consectetuer.</p>
+                            <p>At mediBase, we take pride in offering a holistic healthcare experience. Our Labor and Delivery section is designed for the most precious moments of life, ensuring the safety and comfort of both mothers and newborns. Meanwhile, our Emergency Department stands ready 24/7, staffed with skilled professionals and equipped with advanced technology, providing immediate care and peace of mind for you and your loved ones.</p>
                             <div class="footer-social-info">
                                 <a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a>
                                 <a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
@@ -621,7 +676,7 @@
                                     <input type="email" class="form-control border-0 mb-0" name="newsletterEmail" id="newsletterEmail" placeholder="Your Email Here">
                                     <button type="submit">Subscribe</button>
                                 </form>
-                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Lorem ipsum dolor sit amet, consectetuer.</p>
+                                <p>At medibase, we stand as the epitome of exceptional healthcare. Renowned for our unwavering commitment to excellence, compassionate patient care, and cutting-edge services, we take pride in being the preferred choice for those seeking the pinnacle of medical expertise and a superior healthcare experience.</p>
                             </div>
                         </div>
                     </div>
@@ -636,8 +691,10 @@
                         <div class="bottom-footer-content">
                             <!-- Copywrite Text -->
                             <div class="copywrite-text">
-                                <p>&copy;<script>document.write(new Date().getFullYear());</script> All rights reserved <br> MediBase is a subsidiary of <strong>Jouhanzasom&reg;</strong></p>
-                      </div>
+                                <p>&copy;<script>
+                                        document.write(new Date().getFullYear());
+                                    </script> All rights reserved <br> MediBase is a subsidiary of <strong>Jouhanzasom&reg;</strong></p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -656,7 +713,6 @@
     <script src="js/plugins.js"></script>
     <!-- Active js -->
     <script src="js/active.js"></script>
-
 </body>
 
 </html>
