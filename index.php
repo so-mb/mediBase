@@ -147,7 +147,7 @@ mysqli_close($conn);
                         <div class="col-12">
                             <div class="hero-slides-content">
                                 <h2 data-animation="fadeInUp" data-delay="100ms">Medical Services that <br>You can Trust 100%</h2>
-                                <h6 data-animation="fadeInUp" data-delay="400ms">Lorem ipsum dolor sit amet, consectetuer adipiscing elit sed diam nonummy nibh euismod.</h6>
+                                <h6 data-animation="fadeInUp" data-delay="400ms">Enhance Your Life Quality with Better Health!</h6>
                                 <a href="#" class="btn medilife-btn mt-50" data-animation="fadeInUp" data-delay="700ms">Discover mediBase <span>+</span></a>
                             </div>
                         </div>
@@ -161,7 +161,7 @@ mysqli_close($conn);
                         <div class="col-12">
                             <div class="hero-slides-content">
                                 <h2 data-animation="fadeInUp" data-delay="100ms">Medical Services that <br>You can Trust 100%</h2>
-                                <h6 data-animation="fadeInUp" data-delay="400ms">Lorem ipsum dolor sit amet, consectetuer adipiscing elit sed diam nonummy nibh euismod.</h6>
+                                <h6 data-animation="fadeInUp" data-delay="400ms">mediBase offers compassionate, cutting-edge medical services in a patient-centered environment. With state-of-the-art facilities and dedicated healthcare professionals, we prioritize your well-being and strive for excellence in healthcare.</h6>
                                 <a href="#" class="btn medilife-btn mt-50" data-animation="fadeInUp" data-delay="700ms">Discover mediBase <span>+</span></a>
                             </div>
                         </div>
@@ -175,7 +175,7 @@ mysqli_close($conn);
                         <div class="col-12">
                             <div class="hero-slides-content">
                                 <h2 data-animation="fadeInUp" data-delay="100ms">Medical Services that <br>You can Trust 100%</h2>
-                                <h6 data-animation="fadeInUp" data-delay="400ms">Lorem ipsum dolor sit amet, consectetuer adipiscing elit sed diam nonummy nibh euismod.</h6>
+                                <h6 data-animation="fadeInUp" data-delay="400ms">We provide you with a comprehensive variety of medical services around-the-clock, from basic care to customized, modern medicine at a global scale, as one of the biggest and most prestigious medical institutions.</h6>
                                 <a href="#" class="btn medilife-btn mt-50" data-animation="fadeInUp" data-delay="700ms">Discover mediBase <span>+</span></a>
                             </div>
                         </div>
@@ -301,8 +301,9 @@ mysqli_close($conn);
             <div class="row">
                 <div class="col-12 col-lg-4">
                     <div class="medica-about-content">
-                        <h2>We always put our pacients first</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Lorem ipsum dolor sit amet, consectetuer adipiscing eli.</p>
+                        <h2>We always put our patients first</h2>
+                        <p>The Best Care in General Practice and Medicine!Offering Complete Medical Services For Your Entire Household.
+ </p>
                         <a href="#" class="btn medilife-btn mt-50">View the services <span>+</span></a>
                     </div>
                 </div>
@@ -316,7 +317,7 @@ mysqli_close($conn);
                                 </div>
                                 <div class="service-content">
                                     <h5>The Best Doctors</h5>
-                                    <p>Lorem ipsum dolor sit amet, consecte tuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut.</p>
+                                    <p>Your health is our priority we are dedicated to your well-being, every step of the way.</p>
                                 </div>
                             </div>
                         </div>
@@ -327,8 +328,8 @@ mysqli_close($conn);
                                     <i class="icon-blood-donation-1"></i>
                                 </div>
                                 <div class="service-content">
-                                    <h5>Baby Nursery</h5>
-                                    <p>Dolor sit amet, consecte tuer elit, sed diam nonummy nibh euismod tincidunt ut ldolore magna.</p>
+                                    <h5>Top Maternity Care</h5>
+                                    <p>In mediBase we believe in a healthcare experience that goes beyond medical treatment – it's a journey where healing meets hospitality.</p>
                                 </div>
                             </div>
                         </div>
@@ -339,8 +340,8 @@ mysqli_close($conn);
                                     <i class="icon-flask-2"></i>
                                 </div>
                                 <div class="service-content">
-                                    <h5>Laboratory</h5>
-                                    <p>Lorem ipsum dolor sit amet, consecte tuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut.</p>
+                                    <h5>Healthcare</h5>
+                                    <p>Experience a healthcare environment where your well-being is our priority, and where the intersection of compassion and proficiency defines our commitment to you.</p>
                                 </div>
                             </div>
                         </div>
@@ -352,7 +353,7 @@ mysqli_close($conn);
                                 </div>
                                 <div class="service-content">
                                     <h5>Emergency Room</h5>
-                                    <p>Dolor sit amet, consecte tuer elit, sed diam nonummy nibh euismod tincidunt ut ldolore magna.</p>
+                                    <p>mediBase is where compassionate care and exceptional expertise converge seamlessly.</p>
                                 </div>
                             </div>
                         </div>
@@ -373,7 +374,7 @@ mysqli_close($conn);
                         <i class="icon-blood-transfusion-2"></i>
                         <h2><span class="counter">5632</span></h2>
                         <h6>Blood donations</h6>
-                        <p>Dolor sit amet, consecte tuer adipiscing elit, sed diam nonummy nibh euismod tincidunt.</p>
+                        <p>At mediBase, our robust blood donation efforts support vital medical treatments and emergencies, reinforcing our commitment to community health.</p>
                     </div>
                 </div>
                 <!-- Single Cool Fact-->
@@ -382,7 +383,7 @@ mysqli_close($conn);
                         <i class="icon-atoms"></i>
                         <h2><span class="counter">23</span>k</h2>
                         <h6>Patients</h6>
-                        <p>Dolor sit amet, consecte tuer adipiscing elit, sed diam nonummy nibh euismod tincidunt.</p>
+                        <p>At mediBase personalized patient care is our priority, with a team of specialized doctors ensuring exceptional treatment for a healthier community.</p>
                     </div>
                 </div>
                 <!-- Single Cool Fact-->
@@ -391,7 +392,7 @@ mysqli_close($conn);
                         <i class="icon-microscope"></i>
                         <h2><span class="counter">25</span></h2>
                         <h6>Specialities</h6>
-                        <p>Dolor sit amet, consecte tuer adipiscing elit, sed diam nonummy nibh euismod tincidunt.</p>
+                        <p>At medibase, we excel in diverse medical specialties, providing tailored and cutting-edge care for each patient.</p>
                     </div>
                 </div>
                 <!-- Single Cool Fact-->
@@ -400,7 +401,7 @@ mysqli_close($conn);
                         <i class="icon-doctor-1"></i>
                         <h2><span class="counter">723</span></h2>
                         <h6>Doctors</h6>
-                        <p>Dolor sit amet, consecte tuer adipiscing elit, sed diam nonummy nibh euismod tincidunt.</p>
+                        <p>At mediBase our skilled professionals provide personalized and cutting-edge healthcare across diverse specialties.</p>
                     </div>
                 </div>
             </div>
@@ -449,7 +450,7 @@ mysqli_close($conn);
                 <div class="col-12 col-lg-6">
                     <div class="features-content">
                         <h2>A new way to treat patients in a revolutionary facility</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Lorem ipsum dolor sit amet, consectetuer adipiscing eli.Lorem ipsum dolor sit amet, consec tetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Lorem ipsum dolor sit amet, consectetuer.</p>
+                        <p>Welcome to medibase, Where Expertise Meets Empathy! Explore our state-of-the-art facility dedicated to comprehensive healthcare, from the miracle of childbirth in our cutting-edge labor and delivery section to the rapid response and compassionate care provided in our top-tier Emergency Department. Your well-being is our priority at every step of your journey.</p>
                         <a href="#" class="btn medilife-btn mt-50">View our services <span>+</span></a>
                     </div>
                 </div>
@@ -484,7 +485,7 @@ mysqli_close($conn);
                                 <a href="#"><img src="img/blog-img/p1.jpg" alt=""></a>
                             </div>
                             <a href="#" class="headline">New drug release soon</a>
-                            <p>Dolor sit amet, consecte tuer adipiscing elit, sed diam nonummy nibh euismod tincidunt.</p>
+                            <p>Introducing New Drug – our latest breakthrough at medibase. Learn more about its potential benefits and our commitment to advancing medical solutions.</p>
                             <a href="#" class="comments">5 Comments</a>
                         </div>
                     </div>
@@ -506,7 +507,7 @@ mysqli_close($conn);
                                 <a href="#"><img src="img/blog-img/p2.jpg" alt=""></a>
                             </div>
                             <a href="#" class="headline">Free Dental Care</a>
-                            <p>Dolor sit amet, consecte tuer adipiscing elit, sed diam nonummy nibh euismod tincidunt.</p>
+                            <p>Enjoy free dental care at mediBase for a brighter, healthier smile.</p>
                             <a href="#" class="comments">31 Comments</a>
                         </div>
                     </div>
@@ -528,7 +529,7 @@ mysqli_close($conn);
                                 <a href="#"><img src="img/blog-img/p3.jpg" alt=""></a>
                             </div>
                             <a href="#" class="headline">Good News For Our Patients</a>
-                            <p>Dolor sit amet, consecte tuer adipiscing elit, sed diam nonummy nibh euismod tincidunt.</p>
+                            <p>At mediBase, discover uplifting health stories and good news to brighten your journey toward well-being.</p>
                             <a href="#" class="comments">10 Comments</a>
                         </div>
                     </div>
@@ -598,7 +599,7 @@ mysqli_close($conn);
                             <div class="footer-logo">
                                 <img src="img/core-img/logo.png" alt="">
                             </div>
-                            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Lorem ipsum dolor sit amet, consectetuer.</p>
+                            <p>At mediBase, we take pride in offering a holistic healthcare experience. Our Labor and Delivery section is designed for the most precious moments of life, ensuring the safety and comfort of both mothers and newborns. Meanwhile, our Emergency Department stands ready 24/7, staffed with skilled professionals and equipped with advanced technology, providing immediate care and peace of mind for you and your loved ones.</p>
                             <div class="footer-social-info">
                                 <a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a>
                                 <a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
@@ -675,7 +676,7 @@ mysqli_close($conn);
                                     <input type="email" class="form-control border-0 mb-0" name="newsletterEmail" id="newsletterEmail" placeholder="Your Email Here">
                                     <button type="submit">Subscribe</button>
                                 </form>
-                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Lorem ipsum dolor sit amet, consectetuer.</p>
+                                <p>At medibase, we stand as the epitome of exceptional healthcare. Renowned for our unwavering commitment to excellence, compassionate patient care, and cutting-edge services, we take pride in being the preferred choice for those seeking the pinnacle of medical expertise and a superior healthcare experience.</p>
                             </div>
                         </div>
                     </div>
