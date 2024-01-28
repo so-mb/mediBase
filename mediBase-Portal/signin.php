@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 // Bind result variables
                 mysqli_stmt_bind_result($stmt, $id, $username, $hashedPassword);
                 if (mysqli_stmt_fetch($stmt)) {
-                    if (password_verify($password, $hashedPassword)) {
+                    if (password_verify($password, $hashedlPassword)) {
                         // Password is correct, start a new session
                         session_start();
 

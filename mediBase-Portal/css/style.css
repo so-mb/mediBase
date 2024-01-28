@@ -325,3 +325,16 @@
     overflow: hidden;
     height: 100%;
 }
+
+
+.external-link-tile {
+    transition: transform 0.3s ease-in-out;
+}
+
+.external-link-tile:hover {
+    transform: scale(1.1);
+}
+
+.external-link-tile a:hover {
+    color: var(--primary);
+}
